@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Ramsey\Uuid\Uuid;
 
 class Violation extends Model
@@ -11,7 +12,7 @@ class Violation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'date', 'offender', 'desc', 'type'
+        'date', 'offender', 'desc', 'type', 'rank', 'position', 'department', 'user_id', 'status', 'evidence'
     ];
 
     public function getRouteKeyName(): string
@@ -27,5 +28,10 @@ class Violation extends Model
                 $model->uuid = (string) Uuid::uuid4();
             }
         });
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

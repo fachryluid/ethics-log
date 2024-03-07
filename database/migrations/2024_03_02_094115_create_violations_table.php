@@ -13,10 +13,16 @@ return new class extends Migration
             $table->id();
             $table->uuid();
             $table->date('date');
+            $table->string('nip', 18)->nullable()->unique();
             $table->string('offender', 32);
             $table->string('type', 64);
+            $table->string('class', 64)->nullable(); // pangkat / golongan asn
+            $table->string('position', 64)->nullable(); // jabatan
+            $table->string('department', 64); // unit kerja
             $table->text('desc');
-            $table->string('status', 16)->default(ViolationStatus::PENDING);
+            $table->string('evidence');
+            $table->string('status', 32)->default(ViolationStatus::PENDING);
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');;
             $table->timestamps();
         });
     }

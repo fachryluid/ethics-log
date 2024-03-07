@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Constants\UserRole;
+use App\Utils\AuthUtils;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -50,6 +53,21 @@ class User extends Authenticatable implements MustVerifyEmail
         });
     }
 
+    public function isAdmin()
+    {
+        return AuthUtils::getRole($this) === UserRole::ADMIN;
+    }
+
+    public function isManager()
+    {
+        return AuthUtils::getRole($this) === UserRole::MANAGER;
+    }
+
+    public function isUser()
+    {
+        return AuthUtils::getRole($this) === UserRole::USER;
+    }
+
     public function admin(): HasOne
     {
         return $this->hasOne(Admin::class);
@@ -58,5 +76,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function manager(): HasOne
     {
         return $this->hasOne(Manager::class);
+    }
+
+    public function violations(): HasMany
+    {
+        return $this->hasMany(Violation::class);
     }
 }

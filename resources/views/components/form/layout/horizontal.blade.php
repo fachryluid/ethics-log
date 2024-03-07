@@ -4,8 +4,9 @@
   <div class="form-body">
     <div class="row">
       {{ $slot }}
-      <div class="col-sm-12 d-flex justify-content-end">
-        <button type="submit" class="btn btn-primary mb-1 me-1">{{ $submitText ?? 'Submit' }}</button>
+      <div class="col-md-4"></div>
+      <div class="col-md-8">
+        <button type="submit" class="btn btn-primary w-100 mt-2">{{ $submitText ?? 'Submit' }}</button>
       </div>
     </div>
   </div>

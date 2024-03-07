@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SecurityController;
 use App\Http\Controllers\SettingController;
@@ -15,9 +16,8 @@ use App\Http\Controllers\ViolationController;
 use Illuminate\Support\Facades\Route;
 
 Route::name('public.')->group(function () {
-    Route::get('/', function () {
-        return redirect()->route('dashboard.index');
-    });
+    Route::get('/', [PublicController::class, 'index'])->name('index');
+    Route::post('/violation/store', [PublicController::class, 'violation_store'])->middleware(['auth', 'verified', 'roles:' . UserRole::USER])->name('violation.store');
 });
 
 Route::name('auth.')->group(function () {
@@ -39,7 +39,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified'])
         Route::resource('/users', UserController::class)->names('user');
         Route::put('/users/{user}/update/password', [UserController::class, 'update_password'])->name('user.update.password');
     });
-    Route::resource('/violations', ViolationController::class)->names('violations');
+    Route::resource('/violations', ViolationController::class)->middleware(['roles:' . UserRole::USER . ',' . UserRole::ADMIN])->names('violations');
     Route::prefix('admins')->name('admins.')->middleware(['roles:' . UserRole::MANAGER])->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('index');
         Route::get('/create', [AdminController::class, 'create'])->name('create');

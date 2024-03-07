@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Constants\UserGender;
 use App\Models\Manager;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -26,7 +27,8 @@ class ManagerSeeder extends Seeder
             'gender' => UserGender::MALE,
             'birthday' => '2002-10-08',
             'phone' => '0812-3456-7891',
-            'password' => Hash::make('pimpinan')
+            'password' => Hash::make('pimpinan'),
+            'email_verified_at' => Carbon::now()
         ]);
 
         Manager::create([

@@ -40,6 +40,13 @@
 	                'hasSubItems' => false,
 	                'link' => route('dashboard.violations.index'),
 	            ],
+							(object) [
+	                'roles' => [$_USER],
+	                'label' => 'Pengaduan',
+	                'icon' => 'bi bi-exclamation-triangle-fill',
+	                'hasSubItems' => false,
+	                'link' => route('dashboard.violations.index'),
+	            ],
 	        ],
 	    ],
 	    (object) [

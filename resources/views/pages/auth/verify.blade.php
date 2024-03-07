@@ -1,8 +1,8 @@
 @extends('layouts.auth')
 @section('title', 'Verifikasi Email')
 @section('content')
-	<h1>Verifikasi Email</h1>
-	<p class="auth-subtitle">Mohon periksa kotak masuk email Anda. Jika Anda tidak menerima pesan, silakan coba kirim ulang.</p>
+	<h1 class="mb-4">Verifikasi Email</h1>
+	<p class="auth-subtitle">Mohon periksa <b>Kotak Masuk</b> email Anda, termasuk folder <b>Spam</b>. Jika Anda tidak menerima pesan, silakan coba kirim ulang.</p>
 	<x-main.alerts />
 	<form action="{{ route('verification.send') }}" method="POST">
 		@csrf

@@ -1,10 +1,17 @@
+@php
+	$_USER = App\Constants\UserRole::USER;
+	$_ADMIN = App\Constants\UserRole::ADMIN;
+	$_MANAGER = App\Constants\UserRole::MANAGER;
+	$role = App\Utils\AuthUtils::getRole(auth()->user());
+	$title = $role == $_ADMIN ? 'Pelanggaran' : 'Pengaduan';
+@endphp
 @extends('layouts.dashboard', [
     'breadcrumbs' => [
         'Dasbor' => route('dashboard.index'),
-        'Pelanggaran' => null,
+        $title => null,
     ],
 ])
-@section('title', 'Pelanggaran')
+@section('title',   $title)
 @push('css')
 	<link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -47,7 +54,7 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex justify-content-between align-items-center">
-					<h4 class="card-title pl-1">Daftar Pelanggaran</h4>
+					<h4 class="card-title pl-1">Daftar {{ $title }}</h4>
 					<div class="d-flex gap-2">
 						<a href="{{ route('dashboard.violations.create') }}" class="btn btn-primary btn-sm">
 							<i class="bi bi-plus-square"></i>
