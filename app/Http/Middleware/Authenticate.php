@@ -15,6 +15,6 @@ class Authenticate extends Middleware
             return route('auth.login.index', ['from' => $request->from]);
         }
 
-        return $request->expectsJson() ? null : route('auth.login.index');
+        return $request->expectsJson() ? null : route('auth.login.index', ['from' => urlencode(url()->current())]);
     }
 }

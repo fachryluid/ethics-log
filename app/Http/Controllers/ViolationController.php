@@ -10,6 +10,7 @@ use App\Models\Violation;
 use App\Utils\AuthUtils;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Storage;
 
 class ViolationController extends Controller
 {
@@ -89,11 +90,20 @@ class ViolationController extends Controller
     public function update(UpdateViolationRequest $request, Violation $violation)
     {
         try {
+            if ($request->hasFile('evidence')) {
+                Storage::delete('public/uploads/evidences/' . $violation->evidence);
+                $violation->evidence = basename($request->file('evidence')->store('public/uploads/evidences'));
+            }
+
+            $violation->nip = $request->nip;
             $violation->date = $request->date;
-            $violation->offender = $request->offender;
             $violation->type = $request->type;
+            $violation->offender = $request->offender;
+            $violation->class = $request->class;
+            $violation->position = $request->position;
+            $violation->department = $request->department;
             $violation->desc = $request->desc;
-            $violation->status = $request->status;
+
             $violation->save();
 
             return redirect()->back()->with('success', 'Data berhasil diperbarui.');
@@ -104,8 +114,32 @@ class ViolationController extends Controller
 
     public function destroy(Violation $violation)
     {
-        $violation->delete();
+        try {
+            if ($violation->status != ViolationStatus::PENDING) {
+                throw new \Error('Tidak dapat menghapus data. Ini mungkin terjadi karena data telah berubah sebelumnya.');
+            }
 
-        return redirect()->route('dashboard.violations.index')->with('success', 'Data berhasil dihapus');
+            $violation->delete();
+
+            return redirect()->route('dashboard.violations.index')->with('success', 'Data berhasil dihapus');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withErrors($th->getMessage())->withInput();
+        }
+    }
+
+    public function verify(Violation $violation)
+    {
+        try {
+            if (!$violation->nip || !$violation->class || !$violation->position) {
+                throw new \Error('Verifikasi data gagal, lengkapi data terlebih dahulu.');
+            }
+
+            $violation->status = ViolationStatus::INVESTIGATING;
+            $violation->save();
+
+            return redirect()->route('dashboard.violations.show', $violation->uuid)->with('success', 'Data telah terverifikasi');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withErrors($th->getMessage())->withInput();
+        }
     }
 }

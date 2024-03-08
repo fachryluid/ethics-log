@@ -12,4 +12,18 @@ class FormatUtils
     }
     return null;
   }
+
+  public static function censorName($name)
+  {
+    if ($name && strlen($name) > 0) {
+      // Get the first character of the name
+      $firstCharacter = mb_substr($name, 0, 1);
+
+      // Replace all characters in the name except the first one with '*'
+      $censoredName = $firstCharacter . str_repeat('*', strlen($name) - 1);
+      return $censoredName;
+    } else {
+      return '-';
+    }
+  }
 }

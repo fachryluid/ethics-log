@@ -40,6 +40,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified'])
         Route::put('/users/{user}/update/password', [UserController::class, 'update_password'])->name('user.update.password');
     });
     Route::resource('/violations', ViolationController::class)->middleware(['roles:' . UserRole::USER . ',' . UserRole::ADMIN])->names('violations');
+    Route::patch('/violations/{violation}/verify', [ViolationController::class, 'verify'])->middleware(['roles:' . UserRole::ADMIN])->name('violations.verify');
     Route::prefix('admins')->name('admins.')->middleware(['roles:' . UserRole::MANAGER])->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('index');
         Route::get('/create', [AdminController::class, 'create'])->name('create');

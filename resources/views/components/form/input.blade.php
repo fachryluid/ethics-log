@@ -7,7 +7,7 @@
 			<div class="input-group">
 				<input type="{{ $type ?? 'text' }}" class="form-control @error($name) is-invalid @enderror {{ $class ?? '' }}" name="{{ $name }}" id="{{ $name }}" placeholder="{{ $placeholder ?? $label }}" value="{{ $value ?? old($name) }}" format="{{ $format ?? '' }}" maxlength="{{ $maxlength ?? '' }}" {{ isset($disabled) && $disabled == true ? 'disabled' : '' }} {{ isset($readonly) && $readonly == true ? 'readonly' : '' }} />
 				<button class="btn btn-primary btn-sm" type="button" onclick="window.location.href = '{{ asset('storage/uploads/evidences/' . $value) }}'">
-					<i class="bi bi-download"></i>
+					<i class="bi bi-file-arrow-down"></i>
 				</button>
 			</div>
 		@else

@@ -1,8 +1,3 @@
-@auth
-	@php $authenticated = true @endphp
-@else
-	@php $authenticated = false @endphp
-@endauth
 @extends('layouts.public')
 @section('title', 'Penerapan Kode Etik')
 @push('css')
@@ -35,7 +30,7 @@
 				<p class="card-text">Pelanggaran Kode Etik di lingkungan Kampus.</p>
 			</div>
 			<div class="card-body">
-				<x-form.layout.horizontal action="{{ route('public.violation.store') }}" method="POST" :submit-text="$authenticated ? 'Submit' : 'Login'" enctype="multipart/form-data">
+				<x-form.layout.horizontal action="{{ route('public.violation.store') }}" method="POST" enctype="multipart/form-data">
 					<input type="hidden" name="from" value="{{ urlencode(url()->current()) }}">
 					<h6 class="mb-4">Personal</h6>
 					<x-form.input layout="horizontal" name="offender" label="Nama Terlapor" placeholder="Nama Lengkap Terlapor" />

@@ -21,10 +21,17 @@
 					<h4 class="card-title pl-1">Detail {{ $title }}</h4>
 					<div class="d-flex gap-2">
 						@if (auth()->user()->isAdmin() && $violation->status === App\Constants\ViolationStatus::PENDING)
-							<a href="#" class="btn btn-primary btn-sm">
-								<i class="bi bi-check-circle"></i>
-								Verifikasi
-							</a>
+							<x-modal.confirm route="{{ route('dashboard.violations.verify', $violation->uuid) }}" method="PATCH" id="verifikasi" title="Verifikasi">
+								<x-slot:btn>
+									<i class="bi bi-check-circle"></i>
+									Verifikasi
+								</x-slot>
+								Verifikasi data {{ $title }}. Pastikan data yang tercantum sudah benar. Jika belum, edit data dengan menekan tombol
+								<span class="badge text-bg-success opacity-75">
+									<i class="bi bi-pencil-square"></i>
+									Edit
+								</span>
+							</x-modal.confirm>
 						@endif
 						@if (auth()->user()->isAdmin())
 							<a href="{{ route('dashboard.violations.edit', $violation->uuid) }}" class="btn btn-success btn-sm">
@@ -47,9 +54,13 @@
 						@if ($role == $_ADMIN)
 							<tr>
 								<th>Nama Pelapor</th>
-								<td>{{ $violation->user?->name ?? '-' }}</td>
+								<td>{{ App\Utils\FormatUtils::censorName($violation->user->name) }}</td>
 							</tr>
 						@endif
+						<tr>
+							<th>Nomor Identitas Pegawai</th>
+							<td>{{ $violation->nip ?? '-' }}</td>
+						</tr>
 						<tr>
 							<th>Nama Terlapor</th>
 							<td>{{ $violation->offender }}</td>
@@ -95,6 +106,22 @@
 								<a href="{{ asset('storage/uploads/evidences/' . $violation->evidence) }}">{{ $violation->evidence }}</a>
 							</td>
 						</tr>
+						@if ($role == $_ADMIN && $violation->status === App\Constants\ViolationStatus::INVESTIGATING)
+							<tr>
+								<th colspan="2">
+									<h6 class="mb-0">Dokumen</h6>
+								</th>
+							</tr>
+							<tr>
+								<th>Surat Panggilan</th>
+								<td>
+									<a href="#" class="btn btn-success btn-sm">
+										<i class="bi bi-download"></i>
+										Unduh
+									</a>
+								</td>
+							</tr>
+						@endif
 					</table>
 				</div>
 			</div>

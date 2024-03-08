@@ -23,7 +23,17 @@
 		<script src="{{ asset('js/initTheme.js') }}"></script>
 		<div id="public">
 			<div class="w-100 d-flex justify-content-between align-items-center px-md-5 bg-white px-3 py-2">
-				<span class="fw-bold fs-4">{{ $setting->app_name }}</span>
+				@if ($setting->app_logo)
+					<div class="d-flex align-items-center gap-2">
+						<img src="{{ asset('storage/uploads/settings/' . $setting->app_logo) }}" alt="Logo" srcset="" style="height: 20px;">
+						<span class="fw-bold fs-4">{{ $setting->app_name }}</span>
+					</div>
+				@else
+					<div class="d-flex align-items-center gap-2">
+						<img src="{{ asset('images/default/jejakode.svg') }}" alt="Logo" srcset="" style="height: 20px;">
+						<span class="fw-bold fs-4">{{ $setting->app_name }}</span>
+					</div>
+				@endif
 				<div class="d-flex justify-content-center align-items-center gap-2">
 					@auth
 						<a href="{{ route('dashboard.index') }}" class="btn btn-primary btn-sm fw-medium">Dashboard</a>
