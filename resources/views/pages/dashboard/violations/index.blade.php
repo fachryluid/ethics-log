@@ -42,7 +42,7 @@
 							<select class="form-select filter-select-status">
 								<option value="">Semua</option>
 								<option value="{{ \App\Constants\ViolationStatus::PENDING }}">{{ \App\Constants\ViolationStatus::PENDING }}</option>
-								<option value="{{ \App\Constants\ViolationStatus::INVESTIGATING }}">{{ \App\Constants\ViolationStatus::INVESTIGATING }}</option>
+								<option value="{{ \App\Constants\ViolationStatus::VERIFIED }}">{{ \App\Constants\ViolationStatus::VERIFIED }}</option>
 								<option value="{{ \App\Constants\ViolationStatus::SUSPENDED }}">{{ \App\Constants\ViolationStatus::SUSPENDED }}</option>
 								<option value="{{ \App\Constants\ViolationStatus::RESOLVED }}">{{ \App\Constants\ViolationStatus::RESOLVED }}</option>
 							</select>

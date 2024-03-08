@@ -106,7 +106,7 @@
 								<a href="{{ asset('storage/uploads/evidences/' . $violation->evidence) }}">{{ $violation->evidence }}</a>
 							</td>
 						</tr>
-						@if ($role == $_ADMIN && $violation->status === App\Constants\ViolationStatus::INVESTIGATING)
+						@if ($role == $_ADMIN && $violation->status === App\Constants\ViolationStatus::VERIFIED)
 							<tr>
 								<th colspan="2">
 									<h6 class="mb-0">Dokumen</h6>

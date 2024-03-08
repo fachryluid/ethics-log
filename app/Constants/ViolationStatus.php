@@ -5,7 +5,10 @@ namespace App\Constants;
 class ViolationStatus
 {
   public const PENDING = 'Pending';
-  public const INVESTIGATING = 'Dalam Pemeriksaan';
+  public const VERIFIED = 'Terverifikasi';
   public const SUSPENDED = 'Ditangguhkan';
   public const RESOLVED = 'Diselesaikan';
+  public const FORWARDED = 'Diteruskan ke Majelis Etik';
+  public const PROVEN_GUILTY = 'Terbukti Bersalah';
+  public const NOT_PROVEN = 'Tidak Terbukti';
 }

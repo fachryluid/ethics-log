@@ -11,6 +11,7 @@ use App\Utils\AuthUtils;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ViolationController extends Controller
 {
@@ -23,7 +24,7 @@ class ViolationController extends Controller
                 $query->where('user_id', auth()->user()->id);
             }
 
-            $data = $query->get();
+            $data = $query->latest();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('status', function ($row) {
@@ -61,7 +62,7 @@ class ViolationController extends Controller
                 'class' => $request->class,
                 'position' => $request->position,
                 'department' => $request->department,
-                'status' => auth()->user()->isAdmin() ? ViolationStatus::INVESTIGATING : ViolationStatus::PENDING,
+                'status' => auth()->user()->isAdmin() ? ViolationStatus::VERIFIED : ViolationStatus::PENDING,
                 'user_id' => auth()->user()->id,
                 'desc' => $request->desc,
                 'evidence' => basename($request->file('evidence')->store('public/uploads/evidences'))
@@ -134,7 +135,7 @@ class ViolationController extends Controller
                 throw new \Error('Verifikasi data gagal, lengkapi data terlebih dahulu.');
             }
 
-            $violation->status = ViolationStatus::INVESTIGATING;
+            $violation->status = ViolationStatus::VERIFIED;
             $violation->save();
 
             return redirect()->route('dashboard.violations.show', $violation->uuid)->with('success', 'Data telah terverifikasi');

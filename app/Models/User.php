@@ -53,17 +53,17 @@ class User extends Authenticatable implements MustVerifyEmail
         });
     }
 
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         return AuthUtils::getRole($this) === UserRole::ADMIN;
     }
 
-    public function isManager()
+    public function isManager(): bool
     {
         return AuthUtils::getRole($this) === UserRole::MANAGER;
     }
 
-    public function isUser()
+    public function isUser(): bool
     {
         return AuthUtils::getRole($this) === UserRole::USER;
     }
