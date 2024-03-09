@@ -23,6 +23,15 @@ return new class extends Migration
             $table->string('evidence');
             $table->string('status', 32)->default(ViolationStatus::PENDING);
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');;
+            $table->string('place');
+            $table->string('regulation_section', 3)->nullable(); // Ketantuan Pasal
+            $table->string('regulation_letter', 3)->nullable(); // Ketentuan Huruf
+            $table->string('regulation_number', 3)->nullable(); // Nomor Peraturan Menteri
+            $table->string('regulation_year', 4)->nullable(); // Tahun Peraturan Menteri
+            $table->string('regulation_about')->nullable(); // Tentang Peraturan Menteri
+            $table->date('session_date')->nullable(); // Tanggal Sidang
+            $table->string('session_decision_report')->nullable(); // Putusan Sidang
+            $table->string('session_official_report')->nullable(); // Berita Acara
             $table->timestamps();
         });
     }

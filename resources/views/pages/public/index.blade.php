@@ -30,7 +30,7 @@
 				Diatur dalam <a href="{{ asset('files/Permendikbud Nomor 48 Tahun 2020.pdf') }}" class="text-white text-decoration-underline">Permendikbud Nomor 48 Tahun 2020</a>,
 				Pelanggaran Etik dan Perilaku adalah sikap, perilaku,
 				perbuatan, tulisan, dan ucapan Pegawai yang
-				bertentangan dengan Kode Etik dan Kode Perilaku
+				bertentangan dengan Kode Etik dan Kode Perilaku.
 			</h5>
 		</div>
 		<div class="card col col-md-6 position-relative">
@@ -41,19 +41,21 @@
 			<div class="card-body">
 				<x-form.layout.horizontal action="{{ route('public.violation.store') }}" method="POST" enctype="multipart/form-data">
 					<input type="hidden" name="from" value="{{ urlencode(url()->current()) }}">
-					<h6 class="mb-4">Personal</h6>
+					<h6 class="mb-4">Terlapor</h6>
 					<x-form.input layout="horizontal" name="offender" label="Nama Terlapor" placeholder="Nama Lengkap Terlapor" />
+					<x-form.input layout="horizontal" name="position" label="Jabatan" placeholder="Jabatan Terlapor" />
 					<x-form.input layout="horizontal" name="department" label="Unit Kerja" placeholder="Lokasi Unit Kerja Terlapor" />
-					<h6 class="mb-4 mt-3">Pelanggaran</h6>
+					<h6 class="mb-4 mt-3">Bentuk Pelanggaran Kode Etik</h6>
 					<x-form.select layout="horizontal" name="type" label="Jenis Kode Etik" :options="collect(\App\Constants\EthicsCode::TYPES)->map(function ($type) {
 					    return (object) [
 					        'label' => $type,
 					        'value' => $type,
 					    ];
 					})" />
-					<x-form.input layout="horizontal" type="date" name="date" label="Tanggal Pelanggaran" />
+					<x-form.input layout="horizontal" type="date" name="date" label="Waktu" />
+					<x-form.input layout="horizontal" name="place" label="Tempat" placeholder="Tempat Kejadian" />
 					<x-form.textarea layout="horizontal" name="desc" label="Deskripsi" placeholder="Deskripsi Pelanggaran" />
-					<x-form.input layout="horizontal" type="file" name="evidence" label="Bukti" />
+					<x-form.input layout="horizontal" type="file" name="evidence" label="Bukti / Dokumen Pendukung" />
 				</x-form.layout.horizontal>
 			</div>
 		</div>

@@ -17,10 +17,12 @@ class PublicController extends Controller
     {
         try {
             $violation = Violation::create([
-                'date' => $request->date,
-                'type' => $request->type,
                 'offender' => $request->offender,
+                'position' => $request->position,
                 'department' => $request->department,
+                'type' => $request->type,
+                'date' => $request->date,
+                'place' => $request->place,
                 'desc' => $request->desc,
                 'user_id' => auth()->user()->id,
                 'evidence' => basename($request->file('evidence')->store('public/uploads/evidences'))

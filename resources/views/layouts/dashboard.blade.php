@@ -60,9 +60,9 @@
 						<div class="float-start">
 							<p>{{ date('Y') }} &copy; {{ $setting->app_name }}</p>
 						</div>
-						<div class="float-end">
+						{{-- <div class="float-end">
 							<p>Developed by <a href="https://jejakode.com">jejakode.com</a></p>
-						</div>
+						</div> --}}
 					</div>
 				</footer>
 			</div>

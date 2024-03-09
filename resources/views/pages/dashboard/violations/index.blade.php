@@ -66,9 +66,9 @@
 					<table class="table-striped data-table table">
 						<thead>
 							<tr>
-								<th>Tanggal</th>
-								<th>Nama Pelaku</th>
+								<th>Terlapor</th>
 								<th>Jenis Kode Etik</th>
+								<th>Deskripsi</th>
 								<th>Status</th>
 								<th style="white-space: nowrap">Aksi</th>
 							</tr>
@@ -88,10 +88,7 @@
 				// processing: true,
 				serverSide: true,
 				ajax: "{{ route('dashboard.violations.index') }}",
-				columns: [{
-						data: 'date',
-						name: 'date'
-					},
+				columns: [
 					{
 						data: 'offender',
 						name: 'offender'
@@ -100,6 +97,10 @@
 						data: 'type',
 						name: 'type',
 						orderable: false,
+					},
+					{
+						data: 'desc',
+						name: 'desc',
 					},
 					{
 						data: 'status',

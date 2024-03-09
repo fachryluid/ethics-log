@@ -26,4 +26,18 @@ class FormatUtils
       return '-';
     }
   }
+
+  public static function digits($digit, $number)
+  {
+    // Convert the number to a string
+    $numberStr = (string) $number;
+
+    // Calculate the number of zeros to pad
+    $zerosToPad = max(0, $digit - strlen($numberStr));
+
+    // Pad the number with leading zeros
+    $paddedNumber = str_repeat('0', $zerosToPad) . $numberStr;
+
+    return $paddedNumber;
+  }
 }

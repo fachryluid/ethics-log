@@ -12,7 +12,26 @@ class Violation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'date', 'offender', 'desc', 'type', 'rank', 'position', 'department', 'user_id', 'status', 'evidence'
+        'date',
+        'nip',
+        'offender',
+        'type',
+        'class',
+        'position',
+        'department',
+        'desc',
+        'evidence',
+        'status',
+        'user_id',
+        'place',
+        'regulation_section',
+        'regulation_letter',
+        'regulation_number',
+        'regulation_year',
+        'regulation_about',
+        'session_date',
+        'session_decision_report',
+        'session_official_report',
     ];
 
     public function getRouteKeyName(): string

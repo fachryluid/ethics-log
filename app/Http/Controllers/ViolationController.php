@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Constants\UserRole;
 use App\Constants\ViolationStatus;
 use App\Http\Requests\StoreViolationRequest;
+use App\Http\Requests\UpdateVerdictRequest;
 use App\Http\Requests\UpdateViolationRequest;
 use App\Models\Violation;
 use App\Utils\AuthUtils;
@@ -32,7 +33,7 @@ class ViolationController extends Controller
                 })
                 ->addColumn('action', function ($row) {
                     $actionBtn = '
-                        <a href="' . route('dashboard.violations.show', $row->uuid) . '" class="btn btn-primary btn-sm">
+                        <a href="' . route('dashboard.violations.show', $row->uuid) . '" class="btn btn-primary btn-sm" style="white-space: nowrap;">
                             <i class="bi bi-list-ul"></i>
                             Detail
                         </a> 
@@ -54,14 +55,23 @@ class ViolationController extends Controller
     public function store(StoreViolationRequest $request)
     {
         try {
-            Violation::create([
-                'nip' => $request->nip,
-                'date' => $request->date,
-                'type' => $request->type,
-                'offender' => $request->offender,
-                'class' => $request->class,
-                'position' => $request->position,
-                'department' => $request->department,
+            Violation::create($request->only(
+                [
+                    'nip',
+                    'date',
+                    'place',
+                    'type',
+                    'offender',
+                    'class',
+                    'position',
+                    'department',
+                    'regulation_section',
+                    'regulation_letter',
+                    'regulation_number',
+                    'regulation_year',
+                    'regulation_about',
+                ]
+            ) + [
                 'status' => auth()->user()->isAdmin() ? ViolationStatus::VERIFIED : ViolationStatus::PENDING,
                 'user_id' => auth()->user()->id,
                 'desc' => $request->desc,
@@ -97,12 +107,18 @@ class ViolationController extends Controller
             }
 
             $violation->nip = $request->nip;
-            $violation->date = $request->date;
-            $violation->type = $request->type;
             $violation->offender = $request->offender;
             $violation->class = $request->class;
             $violation->position = $request->position;
             $violation->department = $request->department;
+            $violation->type = $request->type;
+            $violation->regulation_section = $request->regulation_section;
+            $violation->regulation_letter = $request->regulation_letter;
+            $violation->regulation_number = $request->regulation_number;
+            $violation->regulation_year = $request->regulation_year;
+            $violation->regulation_about = $request->regulation_about;
+            $violation->date = $request->date;
+            $violation->place = $request->place;
             $violation->desc = $request->desc;
 
             $violation->save();
@@ -139,6 +155,38 @@ class ViolationController extends Controller
             $violation->save();
 
             return redirect()->route('dashboard.violations.show', $violation->uuid)->with('success', 'Data telah terverifikasi');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withErrors($th->getMessage())->withInput();
+        }
+    }
+
+    public function forward(Violation $violation)
+    {
+        try {
+            $violation->status = ViolationStatus::FORWARDED;
+            $violation->save();
+
+            return redirect()->route('dashboard.violations.show', $violation->uuid)->with('success', 'Data telah diteruskan');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withErrors($th->getMessage())->withInput();
+        }
+    }
+
+    public function verdict(Violation $violation)
+    {
+        return view('pages.dashboard.violations.verdict', compact('violation'));
+    }
+
+    public function verdict_update(UpdateVerdictRequest $request, Violation $violation)
+    {
+        try {
+            $violation->session_date = $request->session_date;
+            $violation->session_decision_report = basename($request->file('session_decision_report')->store('public/uploads/sessions'));
+            $violation->session_official_report = basename($request->file('session_official_report')->store('public/uploads/sessions'));
+            $violation->status = $request->status;
+            $violation->save();
+
+            return redirect()->route('dashboard.violations.show', $violation->uuid)->with('success', 'Putusan sidang telah diperbarui');
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors($th->getMessage())->withInput();
         }

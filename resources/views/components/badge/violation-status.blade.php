@@ -12,7 +12,19 @@
         'value' => \App\Constants\ViolationStatus::SUSPENDED,
     ],
     (object) [
-        'type' => 'secondary',
-        'value' => \App\Constants\ViolationStatus::INVESTIGATING,
+        'type' => 'warning',
+        'value' => \App\Constants\ViolationStatus::VERIFIED,
     ],
+    (object) [
+        'type' => 'secondary',
+        'value' => \App\Constants\ViolationStatus::FORWARDED,
+    ],
+    (object) [
+        'type' => 'danger',
+        'value' => \App\Constants\ViolationStatus::PROVEN_GUILTY,
+    ],
+    (object) [
+        'type' => 'success',
+        'value' => \App\Constants\ViolationStatus::NOT_PROVEN,
+    ]
 ]" />

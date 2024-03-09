@@ -41,6 +41,9 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified'])
     });
     Route::resource('/violations', ViolationController::class)->middleware(['roles:' . UserRole::USER . ',' . UserRole::ADMIN])->names('violations');
     Route::patch('/violations/{violation}/verify', [ViolationController::class, 'verify'])->middleware(['roles:' . UserRole::ADMIN])->name('violations.verify');
+    Route::patch('/violations/{violation}/forward', [ViolationController::class, 'forward'])->middleware(['roles:' . UserRole::ADMIN])->name('violations.forward');
+    Route::get('/violations/{violation}/verdict', [ViolationController::class, 'verdict'])->middleware(['roles:' . UserRole::ADMIN])->name('violations.verdict');
+    Route::patch('/violations/{violation}/verdict/update', [ViolationController::class, 'verdict_update'])->middleware(['roles:' . UserRole::ADMIN])->name('violations.verdict.update');
     Route::prefix('admins')->name('admins.')->middleware(['roles:' . UserRole::MANAGER])->group(function () {
         Route::get('/', [AdminController::class, 'index'])->name('index');
         Route::get('/create', [AdminController::class, 'create'])->name('create');

@@ -33,6 +33,21 @@
 								</span>
 							</x-modal.confirm>
 						@endif
+						@if (auth()->user()->isAdmin() && $violation->status === App\Constants\ViolationStatus::VERIFIED)
+							<x-modal.confirm route="{{ route('dashboard.violations.forward', $violation->uuid) }}" method="PATCH" id="forward" title="Teruskan ke Majelis Etik">
+								<x-slot:btn>
+									<i class="bi bi-fast-forward-circle"></i>
+									Teruskan
+								</x-slot>
+								Data telah terverifikasi. Selanjutnya akan di teruskan ke <b>Majelis Etik</b>.
+							</x-modal.confirm>
+						@endif
+						@if (auth()->user()->isAdmin() && $violation->status === App\Constants\ViolationStatus::FORWARDED)
+							<a href="{{ route('dashboard.violations.verdict', $violation->uuid) }}" class="btn btn-primary btn-sm">
+								<i class="bi bi-pencil"></i>
+								Putusan Sidang
+							</a>
+						@endif
 						@if (auth()->user()->isAdmin())
 							<a href="{{ route('dashboard.violations.edit', $violation->uuid) }}" class="btn btn-success btn-sm">
 								<i class="bi bi-pencil-square"></i>
@@ -46,20 +61,35 @@
 				</div>
 				<div class="card-body px-4">
 					<table class="table-striped table-detail table">
-						<tr>
-							<th colspan="2">
-								<h6 class="mb-0">Personal</h6>
-							</th>
-						</tr>
 						@if ($role == $_ADMIN)
 							<tr>
-								<th>Nama Pelapor</th>
+								<th colspan="2">
+									<h6 class="mb-0">Pelapor</h6>
+								</th>
+							</tr>
+							<tr>
+								<th>Nama</th>
 								<td>{{ App\Utils\FormatUtils::censorName($violation->user->name) }}</td>
+							</tr>
+							<tr>
+								<th>No. HP</th>
+								<td>{{ $violation->user->phone }}</td>
 							</tr>
 						@endif
 						<tr>
+							<th colspan="2">
+								<h6 class="mb-0">Terlapor</h6>
+							</th>
+						</tr>
+						<tr>
 							<th>Nomor Identitas Pegawai</th>
-							<td>{{ $violation->nip ?? '-' }}</td>
+							<td>
+								@if ($violation->nip)
+									{{ $violation->nip }}
+								@else
+									<span class="text-danger fst-italic">null</span>
+								@endif
+							</td>
 						</tr>
 						<tr>
 							<th>Nama Terlapor</th>
@@ -67,11 +97,23 @@
 						</tr>
 						<tr>
 							<th>Pangkat / Golongan</th>
-							<td>{{ $violation->class ?? '-' }}</td>
+							<td>
+								@if ($violation->class)
+									{{ $violation->class }}
+								@else
+									<span class="text-danger fst-italic">null</span>
+								@endif
+							</td>
 						</tr>
 						<tr>
 							<th>Jabatan</th>
-							<td>{{ $violation->position ?? '-' }}</td>
+							<td>
+								@if ($violation->position)
+									{{ $violation->position }}
+								@else
+									<span class="text-danger fst-italic">null</span>
+								@endif
+							</td>
 						</tr>
 						<tr>
 							<th>Unit Kerja</th>
@@ -87,11 +129,26 @@
 							<td>{{ $violation->type }}</td>
 						</tr>
 						<tr>
-							<th>Tanggal Pelanggaran</th>
+							<th>Dugaan Pelanggaran (UU)</th>
+							<td>
+								Pasal <b>{{ $violation->regulation_section ?? '...' }}</b>
+								Huruf <b>{{ $violation->regulation_letter ?? '...' }}</b>
+								Peraturan Menteri Pendidikan dan Kebudayaan
+								Nomor <b>{{ $violation->regulation_number ?? '...' }}</b>
+								Tahun <b>{{ $violation->regulation_year ?? '...' }}</b>
+								Tentang <b>{{ $violation->regulation_about ?? '...' }}</b>
+							</td>
+						</tr>
+						<tr>
+							<th>Tanggal</th>
 							<td>{{ $violation->date }}</td>
 						</tr>
 						<tr>
-							<th>Deskripsi Pelanggaran</th>
+							<th>Tempat</th>
+							<td>{{ $violation->place }}</td>
+						</tr>
+						<tr>
+							<th>Deskripsi</th>
 							<td>{{ $violation->desc }}</td>
 						</tr>
 						<tr>
@@ -106,7 +163,7 @@
 								<a href="{{ asset('storage/uploads/evidences/' . $violation->evidence) }}">{{ $violation->evidence }}</a>
 							</td>
 						</tr>
-						@if ($role == $_ADMIN && $violation->status === App\Constants\ViolationStatus::VERIFIED)
+						@if ($role == $_ADMIN && $violation->status !== App\Constants\ViolationStatus::PENDING)
 							<tr>
 								<th colspan="2">
 									<h6 class="mb-0">Dokumen</h6>
@@ -121,6 +178,46 @@
 									</a>
 								</td>
 							</tr>
+							@if ($violation->status === App\Constants\ViolationStatus::PROVEN_GUILTY || $violation->status === App\Constants\ViolationStatus::NOT_PROVEN)
+								<tr>
+									<th>Putusan Majelis Etik</th>
+									<td>
+										<a href="#" class="btn btn-success btn-sm">
+											<i class="bi bi-download"></i>
+											Unduh
+										</a>
+									</td>
+								</tr>
+								<tr>
+									<th>Berita Acara Pelaksanaan Putusan Sidang Etik</th>
+									<td>
+										<a href="#" class="btn btn-success btn-sm">
+											<i class="bi bi-download"></i>
+											Unduh
+										</a>
+									</td>
+								</tr>
+							@endif
+							@if ($violation->status === App\Constants\ViolationStatus::PROVEN_GUILTY)
+								<tr>
+									<th>Surat Pernyataan Permohonan Maaf</th>
+									<td>
+										<a href="#" class="btn btn-success btn-sm">
+											<i class="bi bi-download"></i>
+											Unduh
+										</a>
+									</td>
+								</tr>
+								<tr>
+									<th>Surat Pernyataan Penyesalan</th>
+									<td>
+										<a href="#" class="btn btn-success btn-sm">
+											<i class="bi bi-download"></i>
+											Unduh
+										</a>
+									</td>
+								</tr>
+							@endif
 						@endif
 					</table>
 				</div>
