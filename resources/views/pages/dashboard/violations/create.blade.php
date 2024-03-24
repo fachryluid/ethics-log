@@ -23,28 +23,28 @@
 				<div class="card-body px-4">
 					<x-form.layout.horizontal action="{{ route('dashboard.violations.store') }}" method="POST" enctype="multipart/form-data">
 						<h6 class="mb-4">Terlapor</h6>
-						@if ($role == $_ADMIN)
+						{{-- @if ($role == $_ADMIN)
 							<x-form.input layout="horizontal" name="nip" label="NIP" placeholder="Nomor Identitas Pegawai Terlapor" maxlength="18" />
-						@endif
+						@endif --}}
 						<x-form.input layout="horizontal" name="offender" label="Nama Terlapor" placeholder="Nama Lengkap Terlapor" />
-						@if ($role == $_ADMIN)
+						{{-- @if ($role == $_ADMIN)
 							<x-form.select layout="horizontal" name="class" label="Pangkat / Golongan" :options="collect(\App\Constants\EthicsCode::ASN_CLASS)->map(function ($class) {
 							    return (object) [
 							        'label' => $class,
 							        'value' => $class,
 							    ];
 							})" />
-							<x-form.input layout="horizontal" name="position" label="Jabatan" placeholder="Jabatan Terlapor" />
-						@endif
+						@endif --}}
+						<x-form.input layout="horizontal" name="position" label="Jabatan" placeholder="Jabatan Terlapor" />
 						<x-form.input layout="horizontal" name="department" label="Unit Kerja" placeholder="Lokasi Unit Kerja Terlapor" />
-						<h6 class="mb-4 mt-3">Pelanggaran</h6>
+						<h6 class="mb-4 mt-3">Bentuk Pelanggaran Kode Etik</h6>
 						<x-form.select layout="horizontal" name="type" label="Jenis Kode Etik" :options="collect(\App\Constants\EthicsCode::TYPES)->map(function ($type) {
 						    return (object) [
 						        'label' => $type,
 						        'value' => $type,
 						    ];
 						})" />
-						@if ($role == $_ADMIN)
+						{{-- @if ($role == $_ADMIN)
 							<div class="col-md-4">
 								<label>Ketentuan</label>
 							</div>
@@ -81,11 +81,11 @@
 									<div class="invalid-feedback">{{ $message }}</div>
 								@enderror
 							</div>
-						@endif
-						<x-form.input layout="horizontal" type="date" name="date" label="Tanggal Pelanggaran" />
-						<x-form.input layout="horizontal" name="place" label="Tempat Pelanggaran" />
+						@endif --}}
+						<x-form.input layout="horizontal" type="date" name="date" label="Waktu" />
+						<x-form.input layout="horizontal" name="place" label="Tempat" placeholder="Tempat Kejadian" />
 						<x-form.textarea layout="horizontal" name="desc" label="Deskripsi" placeholder="Deskripsi Pelanggaran" />
-						<x-form.input layout="horizontal" type="file" name="evidence" label="Bukti" />
+						<x-form.input layout="horizontal" type="file" name="evidence" label="Bukti / Dokumen Pendukung" />
 					</x-form.layout.horizontal>
 				</div>
 			</div>
