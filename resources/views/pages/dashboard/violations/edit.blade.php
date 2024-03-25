@@ -17,24 +17,24 @@
 				<div class="card-body px-4">
 					<x-form.layout.horizontal action="{{ route('dashboard.violations.update', $violation->uuid) }}" method="PUT" submit-text="Perbarui">
 						<h6 class="mb-4">Terlapor</h6>
-						<x-form.input layout="horizontal" name="nip" label="NIP" placeholder="Nomor Identitas Pegawai Terlapor" maxlength="18" :value="$violation->nip" />
+						{{-- <x-form.input layout="horizontal" name="nip" label="NIP" placeholder="Nomor Identitas Pegawai Terlapor" maxlength="18" :value="$violation->nip" /> --}}
 						<x-form.input layout="horizontal" name="offender" label="Nama Terlapor" placeholder="Nama Lengkap Terlapor" :value="$violation->offender" />
-						<x-form.select layout="horizontal" name="class" label="Pangkat / Golongan" :value="$violation->class" :options="collect(\App\Constants\EthicsCode::ASN_CLASS)->map(function ($class) {
+						{{-- <x-form.select layout="horizontal" name="class" label="Pangkat / Golongan" :value="$violation->class" :options="collect(\App\Constants\EthicsCode::ASN_CLASS)->map(function ($class) {
 						    return (object) [
 						        'label' => $class,
 						        'value' => $class,
 						    ];
-						})" />
+						})" /> --}}
 						<x-form.input layout="horizontal" name="position" label="Jabatan" placeholder="Jabatan Terlapor" :value="$violation->position" />
 						<x-form.input layout="horizontal" name="department" label="Unit Kerja" placeholder="Lokasi Unit Kerja Terlapor" :value="$violation->department" />
-						<h6 class="mb-4 mt-3">Pelanggaran</h6>
+						<h6 class="mb-4 mt-3">Bentuk Pelanggaran Kode Etik</h6>
 						<x-form.select layout="horizontal" name="type" label="Jenis Kode Etik" :value="$violation->type" :options="collect(\App\Constants\EthicsCode::TYPES)->map(function ($type) {
 						    return (object) [
 						        'label' => $type,
 						        'value' => $type,
 						    ];
 						})" />
-						<div class="col-md-4">
+						{{-- <div class="col-md-4">
 							<label>Ketentuan</label>
 						</div>
 						<div class="col-md-4 form-group">
@@ -69,7 +69,7 @@
 							@error('regulation_about')
 								<div class="invalid-feedback">{{ $message }}</div>
 							@enderror
-						</div>
+						</div> --}}
 						<x-form.input layout="horizontal" type="date" name="date" label="Waktu" :value="$violation->date" />
 						<x-form.input layout="horizontal" name="place" label="Tempat" :value="$violation->place" />
 						<x-form.textarea layout="horizontal" name="desc" label="Deskripsi" :value="$violation->desc" />

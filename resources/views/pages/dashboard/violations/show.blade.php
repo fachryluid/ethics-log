@@ -81,7 +81,7 @@
 								<h6 class="mb-0">Terlapor</h6>
 							</th>
 						</tr>
-						<tr>
+						{{-- <tr>
 							<th>Nomor Identitas Pegawai</th>
 							<td>
 								@if ($violation->nip)
@@ -90,12 +90,12 @@
 									<span class="text-danger fst-italic">null</span>
 								@endif
 							</td>
-						</tr>
+						</tr> --}}
 						<tr>
 							<th>Nama Terlapor</th>
 							<td>{{ $violation->offender }}</td>
 						</tr>
-						<tr>
+						{{-- <tr>
 							<th>Pangkat / Golongan</th>
 							<td>
 								@if ($violation->class)
@@ -104,7 +104,7 @@
 									<span class="text-danger fst-italic">null</span>
 								@endif
 							</td>
-						</tr>
+						</tr> --}}
 						<tr>
 							<th>Jabatan</th>
 							<td>
@@ -121,14 +121,14 @@
 						</tr>
 						<tr>
 							<th colspan="2">
-								<h6 class="mb-0">Pelanggaran</h6>
+								<h6 class="mb-0">Bentuk Pelanggaran Kode Etik</h6>
 							</th>
 						</tr>
 						<tr>
 							<th>Jenis Kode Etik</th>
 							<td>{{ $violation->type }}</td>
 						</tr>
-						<tr>
+						{{-- <tr>
 							<th>Dugaan Pelanggaran (UU)</th>
 							<td>
 								Pasal <b>{{ $violation->regulation_section ?? '...' }}</b>
@@ -138,9 +138,9 @@
 								Tahun <b>{{ $violation->regulation_year ?? '...' }}</b>
 								Tentang <b>{{ $violation->regulation_about ?? '...' }}</b>
 							</td>
-						</tr>
+						</tr> --}}
 						<tr>
-							<th>Tanggal</th>
+							<th>Waktu</th>
 							<td>{{ $violation->date }}</td>
 						</tr>
 						<tr>
