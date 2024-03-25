@@ -3,7 +3,7 @@
 @push('css')
 <style>
 	#call-to-action::before {
-		background-image: url('{{ asset(' storage/uploads/settings/' . $setting->auth_bg) }}');
+		background-image: url('{{ asset('storage/uploads/settings/' . $setting->auth_bg) }}');
 		background-repeat: no-repeat;
 		background-position: 50% 0;
 		background-size: cover;
@@ -14,7 +14,7 @@
 		top: 0;
 		width: 100%;
 		height: 100%;
-		opacity: 0.15;
+		opacity: 0.5;
 	}
 </style>
 @endpush
