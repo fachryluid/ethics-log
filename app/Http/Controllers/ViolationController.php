@@ -147,9 +147,9 @@ class ViolationController extends Controller
     public function verify(Violation $violation)
     {
         try {
-            if (!$violation->nip || !$violation->class || !$violation->position) {
-                throw new \Error('Verifikasi data gagal, lengkapi data terlebih dahulu.');
-            }
+            // if (!$violation->nip || !$violation->class || !$violation->position) {
+            //     throw new \Error('Verifikasi data gagal, lengkapi data terlebih dahulu.');
+            // }
 
             $violation->status = ViolationStatus::VERIFIED;
             $violation->save();
