@@ -3,48 +3,20 @@
         'Dasbor' => route('dashboard.index'),
         'Pelanggaran' => route('dashboard.violations.index'),
         explode('-', $violation->uuid)[0] . '..' => route('dashboard.violations.show', $violation->uuid),
-        'Edit' => null,
+        'Edit Ketentuan' => null,
     ],
 ])
-@section('title', 'Edit Pelanggaran')
+@section('title', 'Edit Ketentuan')
 @section('content')
 	<section class="row">
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex justify-content-between align-items-center">
-					<h4 class="card-title pl-1">Form Edit Pelanggaran</h4>
+					<h4 class="card-title pl-1">Form Edit Ketentuan</h4>
 				</div>
 				<div class="card-body px-4">
-					<x-form.layout.horizontal action="{{ route('dashboard.violations.update', $violation->uuid) }}" method="PUT" submit-text="Perbarui">
-						<h6 class="mb-4">Terlapor</h6>
-						<x-form.input layout="horizontal" name="nip" label="NIP" placeholder="Nomor Identitas Pegawai Terlapor" maxlength="18" :value="$violation->nip" />
-						<x-form.input layout="horizontal" name="offender" label="Nama Terlapor" placeholder="Nama Lengkap Terlapor" :value="$violation->offender" />
-						<x-form.select layout="horizontal" name="class" label="Pangkat / Golongan" :value="$violation->class" :options="collect(\App\Constants\Options::PANGKAT_GOLONGAN)->map(function ($class) {
-						    return (object) [
-						        'label' => $class,
-						        'value' => $class,
-						    ];
-						})" />
-						<x-form.select layout="horizontal" name="position" label="Jabatan" :value="$violation->position" :options="collect(\App\Constants\Options::JABATAN)->map(function ($class) {
-							return (object) [
-									'label' => $class,
-									'value' => $class,
-							];
-					})" />
-						<x-form.select layout="horizontal" name="department" label="Unit Kerja" :value="$violation->department" :disabled="true" :options="$units->map(function ($unit) {
-						    return (object) [
-						        'label' => $unit->name,
-						        'value' => $unit->id,
-						    ];
-						})" />
-						<h6 class="mb-4 mt-3">Bentuk Pelanggaran Kode Etik</h6>
-						<x-form.select layout="horizontal" name="type" label="Jenis Kode Etik" :value="$violation->type" :disabled="true" :options="collect(\App\Constants\EthicsCode::TYPES)->map(function ($type) {
-						    return (object) [
-						        'label' => $type,
-						        'value' => $type,
-						    ];
-						})" />
-						{{-- <div class="col-md-4">
+					<x-form.layout.horizontal action="{{ route('dashboard.violations.provision.update', $violation->uuid) }}" method="PATCH" submit-text="Perbarui">
+						<div class="col-md-4">
 							<label>Ketentuan</label>
 						</div>
 						<div class="col-md-4 form-group">
@@ -79,11 +51,7 @@
 							@error('regulation_about')
 								<div class="invalid-feedback">{{ $message }}</div>
 							@enderror
-						</div> --}}
-						<x-form.input layout="horizontal" type="date" name="date" label="Waktu" :value="$violation->date" :disabled="true" />
-						<x-form.input layout="horizontal" name="place" label="Tempat" :value="$violation->place" :disabled="true" />
-						<x-form.textarea layout="horizontal" name="desc" label="Deskripsi" :value="$violation->desc" :disabled="true" />
-						<x-form.input layout="horizontal" type="file" name="evidence" label="Bukti" :value="$violation->evidence" :disabled="true" />
+						</div>
 					</x-form.layout.horizontal>
 				</div>
 			</div>

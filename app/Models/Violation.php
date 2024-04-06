@@ -29,6 +29,9 @@ class Violation extends Model
         'regulation_number',
         'regulation_year',
         'regulation_about',
+        'examination_place',
+        'examination_date',
+        'examination_time',
         'session_date',
         'session_decision_report',
         'session_official_report',
@@ -52,5 +55,10 @@ class Violation extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function unit_kerja(): BelongsTo
+    {
+        return $this->belongsTo(UnitKerja::class, 'department');
     }
 }

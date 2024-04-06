@@ -6,13 +6,13 @@
         'Edit' => null,
     ],
 ])
-@section('title', 'Edit Pelanggaran')
+@section('title', 'Putusan Sidang')
 @section('content')
 	<section class="row">
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex justify-content-between align-items-center">
-					<h4 class="card-title pl-1">Form Edit Pelanggaran</h4>
+					<h4 class="card-title pl-1">Form Putusan Sidang</h4>
 				</div>
 				<div class="card-body px-4">
 					<x-form.layout.horizontal action="{{ route('dashboard.violations.verdict.update', $violation->uuid) }}" method="PATCH" enctype="multipart/form-data">

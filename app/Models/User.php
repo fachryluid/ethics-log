@@ -68,6 +68,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return AuthUtils::getRole($this) === UserRole::USER;
     }
 
+    public function isAtasan(): bool
+    {
+        return AuthUtils::getRole($this) === UserRole::ATASAN_UNIT_KERJA;
+    }
+
+    public function isKomisi(): bool
+    {
+        return AuthUtils::getRole($this) === UserRole::KOMISI_KODE_ETIK;
+    }
+
     public function admin(): HasOne
     {
         return $this->hasOne(Admin::class);
@@ -76,6 +86,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function manager(): HasOne
     {
         return $this->hasOne(Manager::class);
+    }
+
+    public function atasan(): HasOne
+    {
+        return $this->hasOne(AtasanUnitKerja::class);
+    }
+
+    public function komisi(): HasOne
+    {
+        return $this->hasOne(KomisiKodeEtik::class);
     }
 
     public function violations(): HasMany

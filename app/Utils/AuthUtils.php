@@ -16,6 +16,14 @@ class AuthUtils
           $role = UserRole::MANAGER;
         }
 
+        if ($user->atasan) {
+          $role = UserRole::ATASAN_UNIT_KERJA;
+        }
+
+        if ($user->komisi) {
+          $role = UserRole::KOMISI_KODE_ETIK;
+        }
+
         return $role ?? UserRole::USER;
     }
 }

@@ -2,6 +2,8 @@
 	$_USER = App\Constants\UserRole::USER;
 	$_ADMIN = App\Constants\UserRole::ADMIN;
 	$_MANAGER = App\Constants\UserRole::MANAGER;
+	$_ATASAN = App\Constants\UserRole::ATASAN_UNIT_KERJA;
+	$_KOMISI = App\Constants\UserRole::KOMISI_KODE_ETIK;
 	$role = App\Utils\AuthUtils::getRole(auth()->user());
 
 	$links = [
@@ -34,7 +36,7 @@
 	                ],
 	            ],
 	            (object) [
-	                'roles' => [$_ADMIN],
+	                'roles' => [$_ADMIN, $_ATASAN, $_KOMISI],
 	                'label' => 'Pelanggaran',
 	                'icon' => 'bi bi-exclamation-triangle-fill',
 	                'hasSubItems' => false,
@@ -43,7 +45,7 @@
 							(object) [
 	                'roles' => [$_USER],
 	                'label' => 'Pengaduan',
-	                'icon' => 'bi bi-exclamation-triangle-fill',
+	                'icon' => 'bi bi-megaphone-fill',
 	                'hasSubItems' => false,
 	                'link' => route('dashboard.violations.index'),
 	            ],

@@ -3,7 +3,7 @@
 		<label for="{{ $name }}">{{ $label }}</label>
 	</div>
 	<div class="col-md-8 form-group">
-		<textarea class="form-control @error($name) is-invalid @enderror" name="{{ $name }}" id="{{ $name }}" placeholder="{{ $placeholder ?? $label }}">{{ $value ?? old($name) }}</textarea>
+		<textarea class="form-control @error($name) is-invalid @enderror" name="{{ $name }}" id="{{ $name }}" placeholder="{{ $placeholder ?? $label }}" {{ isset($disabled) && $disabled === true ? 'disabled' : '' }}>{{ $value ?? old($name) }}</textarea>
 		@error($name)
 			<div class="invalid-feedback">{{ $message }}</div>
 		@enderror
@@ -11,7 +11,7 @@
 @else
   <div class="mb-3">
     <label for="{{ $name }}" class="form-label">{{ $label }}</label>
-    <textarea class="form-control @error($name) is-invalid @enderror" name="{{ $name }}" id="{{ $name }}" placeholder="{{ $placeholder ?? $label }}">{{ $value ?? old($name) }}</textarea>
+    <textarea class="form-control @error($name) is-invalid @enderror" name="{{ $name }}" id="{{ $name }}" placeholder="{{ $placeholder ?? $label }}" {{ isset($disabled) && $disabled === true ? 'disabled' : '' }}>{{ $value ?? old($name) }}</textarea>
     @error($name)
       <div class="invalid-feedback">{{ $message }}</div>
     @enderror

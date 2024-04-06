@@ -35,8 +35,13 @@
 							    ];
 							})" />
 						@endif --}}
-						<x-form.input layout="horizontal" name="position" label="Jabatan" placeholder="Jabatan Terlapor" />
-						<x-form.input layout="horizontal" name="department" label="Unit Kerja" placeholder="Lokasi Unit Kerja Terlapor" />
+						{{-- <x-form.input layout="horizontal" name="position" label="Jabatan" placeholder="Jabatan Terlapor" /> --}}
+						<x-form.select layout="horizontal" name="department" label="Unit Kerja" :options="$units->map(function ($unit) {
+						    return (object) [
+						        'label' => $unit->name,
+						        'value' => $unit->id,
+						    ];
+						})" />
 						<h6 class="mb-4 mt-3">Bentuk Pelanggaran Kode Etik</h6>
 						<x-form.select layout="horizontal" name="type" label="Jenis Kode Etik" :options="collect(\App\Constants\EthicsCode::TYPES)->map(function ($type) {
 						    return (object) [

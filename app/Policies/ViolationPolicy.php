@@ -2,65 +2,54 @@
 
 namespace App\Policies;
 
+use App\Constants\ViolationStatus;
 use App\Models\User;
 use App\Models\Violation;
-use Illuminate\Auth\Access\Response;
 
 class ViolationPolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
-    /**
-     * Determine whether the user can view the model.
-     */
     public function view(User $user, Violation $violation): bool
     {
-        //
+        return true;
     }
 
-    /**
-     * Determine whether the user can create models.
-     */
     public function create(User $user): bool
     {
-        //
+        return $user->isAdmin() || $user->isUser();
     }
 
-    /**
-     * Determine whether the user can update the model.
-     */
     public function update(User $user, Violation $violation): bool
     {
-        //
+        return $user->isAdmin() && $violation->status === ViolationStatus::VERIFIED;
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Violation $violation): bool
+    public function verify(User $user, $violation): bool
     {
-        //
+        return $user->isAtasan() && $user->atasan->unit_kerja_id === $violation->department;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Violation $violation): bool
+    public function forward(User $user, $violation): bool
     {
-        //
+        return $user->isAdmin() && $violation->status === ViolationStatus::VERIFIED;
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Violation $violation): bool
+    public function verdict(User $user, $violation): bool
     {
-        //
+        return $user->isKomisi() && $violation->status === ViolationStatus::FORWARDED;
+    }
+
+    public function provision(User $user, $violation): bool
+    {
+        return $user->isKomisi() && $violation->status === ViolationStatus::FORWARDED;
+    }
+
+    public function examination(User $user, $violation): bool
+    {
+        return $user->isKomisi() && $violation->status === ViolationStatus::FORWARDED;
     }
 }

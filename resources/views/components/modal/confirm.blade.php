@@ -3,8 +3,10 @@
 </a>
 <div class="modal fade" id="modalConfirm{{ $id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="{{ $id }}Label" aria-hidden="true">
 	<form action="{{ $route }}" method="{{ $method && $method == 'GET' ? 'GET' : 'POST' }}" class="modal-dialog">
-    @csrf
-    @method($method ?? 'POST')
+		@if ($method !== 'GET')
+			@csrf
+			@method($method ?? 'POST')
+		@endif
 		<div class="modal-content">
 			<div class="modal-header">
 				<h1 class="modal-title fs-5">{{ $title }}</h1>
