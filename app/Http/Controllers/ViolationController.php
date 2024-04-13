@@ -38,6 +38,12 @@ class ViolationController extends Controller
                 $query->where('department', auth()->user()->atasan->unit_kerja_id);
             }
 
+            $status = $request->input('status');
+
+            if ($status) {
+                $query->where('status', $status);
+            }
+
             $data = $query->latest();
             return DataTables::of($data)
                 ->addIndexColumn()

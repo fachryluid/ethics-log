@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('report_logo')->nullable();
             $table->string('app_logo')->nullable();
             $table->text('report_header');
+            $table->string('nama_ketua_komisi')->nullable();
+            $table->string('nip_ketua_komisi')->nullable();
             $table->timestamps();
         });
     }

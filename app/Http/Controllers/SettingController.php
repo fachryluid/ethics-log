@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateSettingRequest;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
@@ -38,6 +39,21 @@ class SettingController extends Controller
             $setting->app_name = $request->app_name;
             $setting->app_desc = $request->app_desc;
             $setting->report_header = $request->report_header;
+            $setting->update();
+            
+            return redirect()->back()->with('success', 'Data berhasil diperbarui.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->withErrors($th->getMessage())->withInput();
+        }
+    }
+
+    public function komisi_update(Request $request)
+    {
+        try {
+            $setting = Setting::where('id', 1)->first();
+
+            $setting->nama_ketua_komisi = $request->nama_ketua_komisi;
+            $setting->nip_ketua_komisi = $request->nip_ketua_komisi;
             $setting->update();
             
             return redirect()->back()->with('success', 'Data berhasil diperbarui.');

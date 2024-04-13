@@ -14,6 +14,7 @@ class LoginAuthenticateRequest extends FormRequest
     public function rules(): array
 {
     return [
+        'role' => 'required',
         'username' => 'required|string',
         'password' => 'required|string'
     ];
@@ -22,6 +23,7 @@ class LoginAuthenticateRequest extends FormRequest
 public function messages(): array
 {
     return [
+        'role.required' => 'Masuk sebagai wajib diisi.',
         'username.required' => 'Username wajib diisi.',
         'password.required' => 'Password wajib diisi.',
     ];

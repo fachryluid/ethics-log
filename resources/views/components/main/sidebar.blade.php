@@ -11,7 +11,7 @@
 	        'title' => 'Menu',
 	        'items' => [
 	            (object) [
-	                'label' => 'Dasbor',
+	                'label' => 'Dashboard',
 	                'icon' => 'bi bi-grid-fill',
 	                'hasSubItems' => false,
 	                'link' => route('dashboard.index'),
@@ -79,7 +79,7 @@
 	                'link' => route('dashboard.security.index'),
 	            ],
 	            (object) [
-	                'roles' => [$_ADMIN],
+	                'roles' => [$_ADMIN, $_KOMISI],
 	                'label' => 'Pengaturan',
 	                'icon' => 'bi bi-gear-fill',
 	                'hasSubItems' => false,
@@ -98,7 +98,7 @@
 					<a href="{{ route('dashboard.index') }}">
 						@if ($setting->app_logo)
 							<div class="d-flex align-items-center gap-2">
-								<img src="{{ asset('storage/uploads/settings/' . $setting->app_logo) }}" alt="Logo" srcset="">
+								<img src="{{ asset('storage/uploads/settings/' . $setting->app_logo) }}" alt="Logo" srcset="" style="height: 30px">
 								<span class="fs-5 text-primary">{{ $setting->app_name }}</span>
 							</div>
 						@else

@@ -13,25 +13,42 @@
 @endpush
 @section('content')
 	<section class="row">
-		<div class="col-12">
-			<div class="card">
-				<div class="card-header">
-					<h4 class="card-title pl-1">Aplikasi</h4>
-				</div>
-				<div class="card-body">
-					<x-form.layout.horizontal action="{{ route('dashboard.setting.update') }}" method="PUT" enctype="multipart/form-data">
-						<h6 class="mb-3">Umum</h6>
-						<x-form.input layout="horizontal" name="app_name" label="Nama Aplikasi" :value="$setting->app_name" />
-						<x-form.textarea layout="horizontal" name="app_desc" label="Deskripsi Aplikasi" :value="$setting->app_desc" />
-						<x-form.input layout="horizontal" type="file" name="app_logo" label="Logo Aplikasi" class="image-preview-filepond app-logo" />
-						<x-form.input layout="horizontal" type="file" name="auth_bg" label="Login Background" class="image-preview-filepond auth-bg" />
-						<h6 class="mb-3">Laporan</h6>
-						<x-form.editor layout="horizontal" name="report_header" label="KOP Laporan" :value="$setting->report_header" />
-						<x-form.input layout="horizontal" type="file" name="report_logo" label="Logo Laporan" class="image-preview-filepond report-logo" />
-					</x-form.layout.horizontal>
+		@if (auth()->user()->isAdmin())
+			<div class="col-12">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title pl-1">Aplikasi</h4>
+					</div>
+					<div class="card-body">
+						<x-form.layout.horizontal action="{{ route('dashboard.setting.update') }}" method="PUT" enctype="multipart/form-data">
+							<h6 class="mb-3">Umum</h6>
+							<x-form.input layout="horizontal" name="app_name" label="Nama Aplikasi" :value="$setting->app_name" />
+							<x-form.textarea layout="horizontal" name="app_desc" label="Deskripsi Aplikasi" :value="$setting->app_desc" />
+							<x-form.input layout="horizontal" type="file" name="app_logo" label="Logo Aplikasi" class="image-preview-filepond app-logo" />
+							<x-form.input layout="horizontal" type="file" name="auth_bg" label="Login Background" class="image-preview-filepond auth-bg" />
+							<h6 class="mb-3">Laporan</h6>
+							<x-form.editor layout="horizontal" name="report_header" label="KOP Laporan" :value="$setting->report_header" />
+							<x-form.input layout="horizontal" type="file" name="report_logo" label="Logo Laporan" class="image-preview-filepond report-logo" />
+						</x-form.layout.horizontal>
+					</div>
 				</div>
 			</div>
-		</div>
+		@endif
+		@if (auth()->user()->isKomisi())
+			<div class="col-12">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title pl-1">Ketua Komisi Kode Etik</h4>
+					</div>
+					<div class="card-body">
+						<x-form.layout.horizontal action="{{ route('dashboard.setting.komisi.update') }}" method="PATCH" enctype="multipart/form-data">
+							<x-form.input layout="horizontal" name="nama_ketua_komisi" label="Nama Lengkap" :value="$setting->nama_ketua_komisi" />
+							<x-form.input layout="horizontal" name="nip_ketua_komisi" label="NIP" :value="$setting->nip_ketua_komisi" />
+						</x-form.layout.horizontal>
+					</div>
+				</div>
+			</div>
+		@endif
 	</section>
 @endsection
 @push('scripts')

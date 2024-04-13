@@ -1,3 +1,10 @@
+@php
+	$_USER = App\Constants\UserRole::USER;
+	$_ADMIN = App\Constants\UserRole::ADMIN;
+	$_MANAGER = App\Constants\UserRole::MANAGER;
+	$_ATASAN = App\Constants\UserRole::ATASAN_UNIT_KERJA;
+	$_KOMISI = App\Constants\UserRole::KOMISI_KODE_ETIK;
+@endphp
 @extends('layouts.auth')
 @section('title', 'Login')
 @section('content')
@@ -9,6 +16,19 @@
 		@if (request('from'))
 			<input type="hidden" name="from" value="{{ request('from') }}">
 		@endif
+		<div class="form-group position-relative has-icon-left mb-4">
+			<select name="role" id="role" class="form-control form-control-xl">
+				<option value="" hidden>Masuk sebagai</option>
+				<option value="{{ $_USER }}">{{ $_USER }}</option>
+				<option value="{{ $_ATASAN }}">{{ $_ATASAN }}</option>
+				<option value="{{ $_KOMISI }}">{{ $_KOMISI }}</option>
+				<option value="{{ $_ADMIN }}">{{ $_ADMIN }}</option>
+				<option value="{{ $_MANAGER }}">{{ $_MANAGER }}</option>
+			</select>
+			<div class="form-control-icon">
+				<i class="bi bi-caret-down"></i>
+			</div>
+		</div>
 		<div class="form-group position-relative has-icon-left mb-4">
 			<input type="username" name="username" class="form-control form-control-xl" placeholder="Username / Email">
 			<div class="form-control-icon">

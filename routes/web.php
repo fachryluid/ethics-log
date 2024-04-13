@@ -76,12 +76,13 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified'])
         Route::get('/', [SecurityController::class, 'index'])->name('index');
         Route::put('/update/password', [SecurityController::class, 'update_password'])->name('update.password');
     });
-    Route::prefix('setting')->name('setting.')->middleware([])->group(function () {
+    Route::prefix('setting')->name('setting.')->middleware(['roles:' . UserRole::ADMIN . ',' . UserRole::KOMISI_KODE_ETIK])->group(function () {
         Route::get('/', [SettingController::class, 'index'])->name('index');
         Route::put('/update', [SettingController::class, 'update'])->name('update');
         Route::get('/load-file/auth-bg', [FileController::class, 'loadFileAuthBg']);
         Route::get('/load-file/report-logo', [FileController::class, 'loadFileReportLogo']);
         Route::get('/load-file/app-logo', [FileController::class, 'loadFileAppLogo']);
+        Route::put('/komisi/update', [SettingController::class, 'komisi_update'])->name('komisi.update');
     });
     Route::prefix('download')->name('download.')->group(function () {
         Route::get('/surat_panggilan/{violation}', [DownloadController::class, 'surat_panggilan'])->name('surat_panggilan');

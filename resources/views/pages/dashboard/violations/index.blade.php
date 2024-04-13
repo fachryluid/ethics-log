@@ -11,7 +11,7 @@
         $title => null,
     ],
 ])
-@section('title',   $title)
+@section('title', $title)
 @push('css')
 	<link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -42,9 +42,12 @@
 							<select class="form-select filter-select-status">
 								<option value="">Semua</option>
 								<option value="{{ \App\Constants\ViolationStatus::PENDING }}">{{ \App\Constants\ViolationStatus::PENDING }}</option>
-								<option value="{{ \App\Constants\ViolationStatus::VERIFIED }}">{{ \App\Constants\ViolationStatus::VERIFIED }}</option>
-								<option value="{{ \App\Constants\ViolationStatus::SUSPENDED }}">{{ \App\Constants\ViolationStatus::SUSPENDED }}</option>
 								<option value="{{ \App\Constants\ViolationStatus::RESOLVED }}">{{ \App\Constants\ViolationStatus::RESOLVED }}</option>
+								<option value="{{ \App\Constants\ViolationStatus::SUSPENDED }}">{{ \App\Constants\ViolationStatus::SUSPENDED }}</option>
+								<option value="{{ \App\Constants\ViolationStatus::VERIFIED }}">{{ \App\Constants\ViolationStatus::VERIFIED }}</option>
+								<option value="{{ \App\Constants\ViolationStatus::FORWARDED }}">{{ \App\Constants\ViolationStatus::FORWARDED }}</option>
+								<option value="{{ \App\Constants\ViolationStatus::PROVEN_GUILTY }}">{{ \App\Constants\ViolationStatus::PROVEN_GUILTY }}</option>
+								<option value="{{ \App\Constants\ViolationStatus::NOT_PROVEN }}">{{ \App\Constants\ViolationStatus::NOT_PROVEN }}</option>
 							</select>
 						</div>
 					</div>
@@ -85,11 +88,14 @@
 	<script type="text/javascript">
 		$(function() {
 			const table = $('.data-table').DataTable({
-				// processing: true,
 				serverSide: true,
-				ajax: "{{ route('dashboard.violations.index') }}",
-				columns: [
-					{
+				ajax: {
+					url: "{{ route('dashboard.violations.index') }}",
+					data: function(d) {
+						d.status = $('.filter-select-status').val(); // Ambil nilai dari filter status
+					}
+				},
+				columns: [{
 						data: 'offender',
 						name: 'offender'
 					},
@@ -117,11 +123,11 @@
 			});
 
 			$('.filter-select-type').change(function() {
-				table.column(2).search($(this).val()).draw();
+				table.column(1).search($(this).val()).draw();
 			});
 
 			$('.filter-select-status').change(function() {
-				table.column(3).search($(this).val()).draw();
+				table.ajax.reload();
 			});
 		});
 	</script>

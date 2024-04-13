@@ -6,7 +6,7 @@
 		<div>SURAT PANGGILAN I/II</div>
 		<div>Nomor: {{ request('aa') ?? '...' }} / {{ request('bb') ?? '...' }} / {{ request('cc') ?? '...' }} / {{ request('dd') ?? '...' }}</div>
 	</div>
-	<ol>
+	<ol style="margin-bottom: 60px">
 		<li>Bersama ini diminta dengan hormat kehadiran Saudara.</li>
 		<table style="margin: 20px 0;">
 			<tr>
@@ -66,4 +66,18 @@
 		</div>
 		<li>Demikian untuk dilaksanakan.</li>
 	</ol>
+	<div style="float: right;">
+		<div>Gorontalo, {{ \Carbon\Carbon::today()->isoFormat('D MMMM YYYY') }}</div>
+		<div style="margin-bottom: 100px">Ketua Majelis Etik,</div>
+		<div>Muh. Fachry J.K. Luid, S. Kom</div>
+		<div>NIP. 2375412673</div>
+	</div>
+	<div style="margin-top: 150px">
+		<div>Tembusan:</div>
+		<ol>
+			<li>...</li>
+			<li>...</li>
+			<li>dst</li>
+		</ol>
+	</div>
 @endsection
