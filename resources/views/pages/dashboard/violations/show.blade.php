@@ -257,7 +257,7 @@
 								<tr>
 									<th>Putusan Majelis Etik</th>
 									<td>
-										<a href="#" class="btn btn-success btn-sm">
+										<a href="{{ asset('storage/uploads/sessions/' . $violation->session_decision_report) }}" class="btn btn-success btn-sm">
 											<i class="bi bi-download"></i>
 											Unduh
 										</a>
@@ -266,7 +266,7 @@
 								<tr>
 									<th>Berita Acara Pelaksanaan Putusan Sidang Etik</th>
 									<td>
-										<a href="#" class="btn btn-success btn-sm">
+										<a href="{{ asset('storage/uploads/sessions/' . $violation->session_official_report) }}" class="btn btn-success btn-sm">
 											<i class="bi bi-download"></i>
 											Unduh
 										</a>
@@ -274,7 +274,7 @@
 								</tr>
 							@endif
 							@if ($violation->status === App\Constants\ViolationStatus::PROVEN_GUILTY)
-								<tr>
+								{{-- <tr>
 									<th>Surat Pernyataan Permohonan Maaf</th>
 									<td>
 										<a href="#" class="btn btn-success btn-sm">
@@ -286,9 +286,12 @@
 								<tr>
 									<th>Surat Pernyataan Penyesalan</th>
 									<td>
-
+										<a href="#" class="btn btn-success btn-sm">
+											<i class="bi bi-download"></i>
+											Unduh
+										</a>
 									</td>
-								</tr>
+								</tr> --}}
 							@endif
 						@endif
 					</table>
