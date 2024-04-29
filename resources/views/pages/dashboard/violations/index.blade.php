@@ -2,8 +2,9 @@
 	$_USER = App\Constants\UserRole::USER;
 	$_ADMIN = App\Constants\UserRole::ADMIN;
 	$_MANAGER = App\Constants\UserRole::MANAGER;
+	$_KOMISI_KODE_ETIK = App\Constants\UserRole::KOMISI_KODE_ETIK;
 	$role = App\Utils\AuthUtils::getRole(auth()->user());
-	$title = $role == $_ADMIN ? 'Pelanggaran' : 'Pengaduan';
+	$title = $role == $_ADMIN || $role == $_KOMISI_KODE_ETIK  ? 'Pelanggaran' : 'Pengaduan';
 @endphp
 @extends('layouts.dashboard', [
     'breadcrumbs' => [
@@ -58,12 +59,14 @@
 			<div class="card">
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<h4 class="card-title pl-1">Daftar {{ $title }}</h4>
-					<div class="d-flex gap-2">
-						<a href="{{ route('dashboard.violations.create') }}" class="btn btn-primary btn-sm">
-							<i class="bi bi-plus-square"></i>
-							Tambah Data
-						</a>
-					</div>
+					@if (auth()->user()->isAdmin() || auth()->user()->isUser())
+						<div class="d-flex gap-2">
+							<a href="{{ route('dashboard.violations.create') }}" class="btn btn-primary btn-sm">
+								<i class="bi bi-plus-square"></i>
+								Tambah Data
+							</a>
+						</div>
+					@endif
 				</div>
 				<div class="card-body table-responsive px-4">
 					<table class="table-striped data-table table">

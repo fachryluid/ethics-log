@@ -16,10 +16,10 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:32',
+            'name' => 'required',
             'username' => [
                 'required',
-                'regex:/^[a-zA-Z0-9_]+$/',
+                'regex:/^[a-zA-Z0-9_-]+$/',
                 Rule::unique('users', 'username')->ignore($this->user->id, 'id'),
             ],
             'email' => [

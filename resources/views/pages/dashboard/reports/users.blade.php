@@ -1,3 +1,9 @@
+@php
+	$_USER = App\Constants\UserRole::USER;
+	$_ATASAN = App\Constants\UserRole::ATASAN_UNIT_KERJA;
+	$_KOMISI = App\Constants\UserRole::KOMISI_KODE_ETIK;
+	$_ADMIN = App\Constants\UserRole::ADMIN;
+@endphp
 @extends('layouts.dashboard', [
     'breadcrumbs' => [
         'Dasbor' => route('dashboard.index'),
@@ -21,20 +27,14 @@
 				</div>
 				<div class="card-body table-responsive px-4">
 					<div class="row">
-						<div class="col-6">
+						<div class="col-12">
 							<label class="form-label">Jenis Pengguna</label>
-							<select class="form-select filter-select-user-role">
+							<select class="form-select filter-select">
 								<option value="">Semua</option>
-								<option value="{{ App\Constants\UserRole::USER }}">{{ App\Constants\UserRole::USER }}</option>
-								<option value="{{ App\Constants\UserRole::ADMIN }}">{{ App\Constants\UserRole::ADMIN }}</option>
-							</select>
-						</div>
-						<div class="col-6">
-							<label class="form-label">Jenis Kelamin</label>
-							<select class="form-select filter-select-user-gender">
-								<option value="">Semua</option>
-								<option value="{{ App\Constants\UserGender::MALE }}">{{ App\Constants\UserGender::MALE }}</option>
-								<option value="{{ App\Constants\UserGender::FEMALE }}">{{ App\Constants\UserGender::FEMALE }}</option>
+								<option value="admin">{{ $_ADMIN }}</option>
+								<option value="pelapor">{{ $_USER }}</option>
+								<option value="atasan">{{ $_ATASAN }}</option>
+								<option value="komisi">{{ $_KOMISI }}</option>
 							</select>
 						</div>
 					</div>
@@ -57,8 +57,6 @@
 						<thead>
 							<tr>
 								<th>Nama</th>
-								<th>Email</th>
-								<th>Jenis Kelamin</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -73,27 +71,22 @@
 	<script type="text/javascript">
 		$(function() {
 			const table = $('.data-table').DataTable({
-				// processing: true,
 				serverSide: true,
-				ajax: "{{ route('dashboard.reports.users') }}",
+				ajax: {
+					url: "{{ route('dashboard.reports.users') }}",
+					data: function(d) {
+						d.type = $('.filter-select').val();
+					}
+				},
 				columns: [{
 						data: 'name',
 						name: 'name'
-					},
-					{
-						data: 'email',
-						name: 'email'
-					},
-					{
-						data: 'gender',
-						name: 'gender',
-						orderable: false,
 					}
 				]
 			});
 
-			$('.filter-select-user-gender').change(function() {
-				table.column(2).search($(this).val()).draw();
+			$('.filter-select').change(function() {
+				table.ajax.reload();
 			});
 		});
 	</script>

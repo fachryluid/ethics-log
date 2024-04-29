@@ -21,7 +21,7 @@ class StoreViolationRequest extends FormRequest
             'nip' => $role === UserRole::ADMIN ? 'nullable|numeric|unique:violations,nip' : 'nullable',
             'offender' => 'required|string',
             'class' => $role === UserRole::ADMIN ? 'nullable' : 'nullable',
-            'position' => $role === UserRole::ADMIN ? 'required' : 'nullable',
+            'position' => $role === UserRole::ADMIN ? 'nullable' : 'nullable',
             'department' => 'required',
             'type' => 'required',
             'regulation_section' => $role === UserRole::ADMIN ? 'nullable' : 'nullable',

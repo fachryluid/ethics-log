@@ -19,10 +19,10 @@
 		<div class="form-group position-relative has-icon-left mb-4">
 			<select name="role" id="role" class="form-control form-control-xl">
 				<option value="" hidden>Masuk sebagai</option>
+				<option value="{{ $_ADMIN }}">{{ $_ADMIN }}</option>
 				<option value="{{ $_USER }}">{{ $_USER }}</option>
 				<option value="{{ $_ATASAN }}">{{ $_ATASAN }}</option>
 				<option value="{{ $_KOMISI }}">{{ $_KOMISI }}</option>
-				<option value="{{ $_ADMIN }}">{{ $_ADMIN }}</option>
 				<option value="{{ $_MANAGER }}">{{ $_MANAGER }}</option>
 			</select>
 			<div class="form-control-icon">

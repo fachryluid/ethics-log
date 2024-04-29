@@ -17,7 +17,7 @@ class DashboardController extends Controller
 
         $countData = [];
 
-        if (auth()->user()->isAdmin()) {
+        if (auth()->user()->isAdmin() || auth()->user()->isManager()) {
             $countData['users'] = FormatUtils::digits(3, $users->count());
         }
 

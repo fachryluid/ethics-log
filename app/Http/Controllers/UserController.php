@@ -19,6 +19,17 @@ class UserController extends Controller
             $data->whereDoesntHave('admin');
             $data->whereDoesntHave('manager');
 
+            $type = $request->input('type');
+
+            if (isset($type)) {
+                if ($type === 'pelapor') {
+                    $data->whereDoesntHave('atasan');
+                    $data->whereDoesntHave('komisi');
+                } else {
+                    $data->whereHas($type);
+                }
+            }
+
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {

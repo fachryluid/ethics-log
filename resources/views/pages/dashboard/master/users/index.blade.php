@@ -1,3 +1,8 @@
+@php
+	$_USER = App\Constants\UserRole::USER;
+	$_ATASAN = App\Constants\UserRole::ATASAN_UNIT_KERJA;
+	$_KOMISI = App\Constants\UserRole::KOMISI_KODE_ETIK;
+@endphp
 @extends('layouts.dashboard', [
     'breadcrumbs' => [
         'Dasbor' => route('dashboard.index'),
@@ -16,17 +21,18 @@
 	<section class="row">
 		<div class="col-12">
 			<div class="card">
-        <div class="card-header">
+				<div class="card-header">
 					<h4 class="card-title pl-1">Filter</h4>
 				</div>
 				<div class="card-body table-responsive px-4">
 					<div class="row">
 						<div class="col-12">
-							<label class="form-label">Jenis Kelamin</label>
+							<label class="form-label">Jenis Pengguna</label>
 							<select class="form-select filter-select">
 								<option value="">Semua</option>
-								<option value="{{ App\Constants\UserGender::MALE }}">{{ App\Constants\UserGender::MALE }}</option>
-								<option value="{{ App\Constants\UserGender::FEMALE }}">{{ App\Constants\UserGender::FEMALE }}</option>
+								<option value="pelapor">{{ $_USER }}</option>
+								<option value="atasan">{{ $_ATASAN }}</option>
+								<option value="komisi">{{ $_KOMISI }}</option>
 							</select>
 						</div>
 					</div>
@@ -35,7 +41,7 @@
 		</div>
 		<div class="col-12">
 			<div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
+				<div class="card-header d-flex justify-content-between align-items-center">
 					<h4 class="card-title pl-1">Daftar Pengguna</h4>
 					<div class="d-flex gap-2">
 						<a href="{{ route('dashboard.master.user.create') }}" class="btn btn-primary btn-sm">
@@ -49,8 +55,6 @@
 						<thead>
 							<tr>
 								<th>Nama</th>
-								<th>Email</th>
-								<th>Jenis Kelamin</th>
 								<th style="white-space: nowrap">Aksi</th>
 							</tr>
 						</thead>
@@ -66,21 +70,16 @@
 	<script type="text/javascript">
 		$(function() {
 			const table = $('.data-table').DataTable({
-				// processing: true,
 				serverSide: true,
-				ajax: "{{ route('dashboard.master.user.index') }}",
+				ajax: {
+					url: "{{ route('dashboard.master.user.index') }}",
+					data: function(d) {
+						d.type = $('.filter-select').val();
+					}
+				},
 				columns: [{
 						data: 'name',
 						name: 'name'
-					},
-					{
-						data: 'email',
-						name: 'email'
-					},
-					{
-						data: 'gender',
-						name: 'gender',
-						orderable: false,
 					},
 					{
 						data: 'action',
@@ -92,7 +91,7 @@
 			});
 
 			$('.filter-select').change(function() {
-				table.column(2).search($(this).val()).draw();
+				table.ajax.reload();
 			});
 		});
 	</script>

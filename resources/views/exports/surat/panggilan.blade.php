@@ -35,7 +35,7 @@
 				<td>{{ $violation->unit_kerja->name }}</td>
 			</tr>
 		</table>
-		<div>Untuk menghadap kepada Majelis Etik pada:</div>
+		<div>Untuk menghadap kepada Komisi Kode Etik pada:</div>
 		<table style="margin: 20px 0;">
 			<tr>
 				<td style="width: 200px">Hari</td>
@@ -59,7 +59,7 @@
 			</tr>
 		</table>
 		<div style="margin-bottom: 20px; text-align: justify;">
-			Guna diperiksa/dimintai keterangannya sehubungan dengan dugaan
+			Guna diperiksa/dimintai*) keterangannya sehubungan dengan dugaan
 			Pelanggaran Etik dan Perilaku terhadap ketentuan Pasal {{ $violation->regulation_section }} huruf {{ $violation->regulation_letter }}
 			Peraturan Menteri Pendidikan dan Kebudayaan Nomor {{ $violation->regulation_number }} Tahun {{ $violation->regulation_year }}
 			tentang {{ $violation->regulation_about }} berupa {{ $violation->desc }}
@@ -68,16 +68,17 @@
 	</ol>
 	<div style="float: right;">
 		<div>Gorontalo, {{ \Carbon\Carbon::today()->isoFormat('D MMMM YYYY') }}</div>
-		<div style="margin-bottom: 100px">Ketua Majelis Etik,</div>
+		<div style="margin-bottom: 100px">Ketua Komisi Kode Etik,</div>
 		<div>Muh. Fachry J.K. Luid, S. Kom</div>
 		<div>NIP. 2375412673</div>
 	</div>
 	<div style="margin-top: 150px">
 		<div>Tembusan:</div>
-		<ol>
+		<ol style="margin-bottom: 20px">
 			<li>...</li>
 			<li>...</li>
 			<li>dst</li>
 		</ol>
+		<div>*) coret yang tidak perlu</div>
 	</div>
 @endsection

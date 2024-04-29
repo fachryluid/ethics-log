@@ -26,13 +26,13 @@
 							@enderror
 						</div>
 						<div class="col-md-4 form-group">
-							<input type="text" class="form-control @error('regulation_letter') is-invalid @enderror" name="regulation_letter" id="regulation_letter" placeholder="Huruf" value="{{ old('regulation_letter') ?? $violation->regulation_letter }}" />
+							<input type="text" class="form-control @error('regulation_letter') is-invalid @enderror" name="regulation_letter" id="regulation_letter" placeholder="Ayat" value="{{ old('regulation_letter') ?? $violation->regulation_letter }}" />
 							@error('regulation_letter')
 								<div class="invalid-feedback">{{ $message }}</div>
 							@enderror
 						</div>
 						<div class="col-md-4">
-							<label>Peraturan Menteri Pendidikan dan Kebudayaan</label>
+							<label>Peraturan Rektor Universitas Negeri Gorontalo</label>
 						</div>
 						<div class="col-md-2 form-group">
 							<input type="text" class="form-control @error('regulation_number') is-invalid @enderror" name="regulation_number" id="regulation_number" placeholder="Nomor" value="{{ old('regulation_number') ?? $violation->regulation_number }}" />

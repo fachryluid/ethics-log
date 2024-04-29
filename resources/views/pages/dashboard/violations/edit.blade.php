@@ -19,18 +19,53 @@
 						<h6 class="mb-4">Terlapor</h6>
 						<x-form.input layout="horizontal" name="nip" label="NIP" placeholder="Nomor Identitas Pegawai Terlapor" maxlength="18" :value="$violation->nip" />
 						<x-form.input layout="horizontal" name="offender" label="Nama Terlapor" placeholder="Nama Lengkap Terlapor" :value="$violation->offender" />
-						<x-form.select layout="horizontal" name="class" label="Pangkat / Golongan" :value="$violation->class" :options="collect(\App\Constants\Options::PANGKAT_GOLONGAN)->map(function ($class) {
+						<div class="col-md-4">
+							<label for="class">Pangkat / Golongan</label>
+						</div>
+						<div class="col-md-8 form-group">
+							<select name="class" id="class" class="form-select">
+								<option value="" hidden>Pilih Pangkat / Golongan</option>
+								<optgroup label="Dosen PNS">
+									<option value="Dosen PNS - Golongan III A">Golongan III A</option>
+									<option value="Dosen PNS - Golongan III B">Golongan III B</option>
+									<option value="Dosen PNS - Golongan III C">Golongan III C</option>
+									<option value="Dosen PNS - Golongan III D">Golongan III D</option>
+									<option value="Dosen PNS - Golongan IV A">Golongan IV A</option>
+									<option value="Dosen PNS - Golongan IV B">Golongan IV B</option>
+									<option value="Dosen PNS - Golongan IV C">Golongan IV C</option>
+									<option value="Dosen PNS - Golongan IV D">Golongan IV D</option>
+									<option value="Dosen PNS - Golongan IV E">Golongan IV E</option>
+								</optgroup>
+								<optgroup label="Dosen P3K">
+									<option value="Dosen P3K - Golongan X">Golongan X</option>
+									<option value="Dosen P3K - Golongan XI">Golongan XI</option>
+								</optgroup>
+								<optgroup label="Pegawai PNS">
+									<option value="Pegawai PNS - Golongan II A">Golongan II A</option>
+									<option value="Pegawai PNS - Golongan II B">Golongan II B</option>
+									<option value="Pegawai PNS - Golongan II C">Golongan II C</option>
+									<option value="Pegawai PNS - Golongan II D">Golongan II D</option>
+									<option value="Pegawai PNS - Golongan III A">Golongan III A</option>
+									<option value="Pegawai PNS - Golongan III B">Golongan III B</option>
+									<option value="Pegawai PNS - Golongan III C">Golongan III C</option>
+									<option value="Pegawai PNS - Golongan III D">Golongan III D</option>
+									<option value="Pegawai PNS - Golongan IV A">Golongan IV A</option>
+									<option value="Pegawai PNS - Golongan IV B">Golongan IV B</option>
+									<option value="Pegawai PNS - Golongan IV C">Golongan IV C</option>
+									<option value="Pegawai PNS - Golongan IV D">Golongan IV D</option>
+									<option value="Pegawai PNS - Golongan IV E">Golongan IV E</option>
+								</optgroup>
+								<optgroup label="Pegawai P3K">
+									<option value="Pegawai P3K - Golongan IX">Golongan IX</option>
+								</optgroup>
+							</select>
+						</div>
+						<x-form.select layout="horizontal" name="position" label="Jabatan" :value="$violation->position" :options="collect(\App\Constants\Options::JABATAN)->map(function ($class) {
 						    return (object) [
 						        'label' => $class,
 						        'value' => $class,
 						    ];
 						})" />
-						<x-form.select layout="horizontal" name="position" label="Jabatan" :value="$violation->position" :options="collect(\App\Constants\Options::JABATAN)->map(function ($class) {
-							return (object) [
-									'label' => $class,
-									'value' => $class,
-							];
-					})" />
 						<x-form.select layout="horizontal" name="department" label="Unit Kerja" :value="$violation->department" :disabled="true" :options="$units->map(function ($unit) {
 						    return (object) [
 						        'label' => $unit->name,

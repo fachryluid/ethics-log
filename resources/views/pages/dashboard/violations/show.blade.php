@@ -36,12 +36,12 @@
 							</a>
 						@endif
 						@if (auth()->user()->isAdmin() && $violation->status === App\Constants\ViolationStatus::VERIFIED)
-							<x-modal.confirm route="{{ route('dashboard.violations.forward', $violation->uuid) }}" method="PATCH" id="forward" title="Teruskan ke Majelis Etik">
+							<x-modal.confirm route="{{ route('dashboard.violations.forward', $violation->uuid) }}" method="PATCH" id="forward" title="Teruskan ke Komisi Kode Etik">
 								<x-slot:btn>
 									<i class="bi bi-fast-forward-circle"></i>
 									Teruskan
 								</x-slot>
-								Data telah terverifikasi. Selanjutnya akan di teruskan ke <b>Majelis Etik</b>.
+								Data telah terverifikasi. Selanjutnya akan di teruskan ke <b>Komisi Kode Etik</b>.
 							</x-modal.confirm>
 							<a href="{{ route('dashboard.violations.edit', $violation->uuid) }}" class="btn btn-success btn-sm">
 								<i class="bi bi-pencil-square"></i>
@@ -253,9 +253,27 @@
 									</x-modal.confirm>
 								</td>
 							</tr>
+							<tr>
+								<th>Berita Acara Pemeriksaaan</th>
+								<td>
+									<a href="#" class="btn btn-success btn-sm">
+										<i class="bi bi-download"></i>
+										Unduh
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<th>Laporan Hasil Pemeriksaan Tentang Dugaan Pelanggaran Kode Etik</th>
+								<td>
+									<a href="#" class="btn btn-success btn-sm">
+										<i class="bi bi-download"></i>
+										Unduh
+									</a>
+								</td>
+							</tr>
 							@if ($violation->status === App\Constants\ViolationStatus::PROVEN_GUILTY || $violation->status === App\Constants\ViolationStatus::NOT_PROVEN)
 								<tr>
-									<th>Putusan Majelis Etik</th>
+									<th>Putusan Komisi Kode Etik</th>
 									<td>
 										<a href="{{ asset('storage/uploads/sessions/' . $violation->session_decision_report) }}" class="btn btn-success btn-sm">
 											<i class="bi bi-download"></i>
@@ -274,7 +292,7 @@
 								</tr>
 							@endif
 							@if ($violation->status === App\Constants\ViolationStatus::PROVEN_GUILTY)
-								{{-- <tr>
+								<tr>
 									<th>Surat Pernyataan Permohonan Maaf</th>
 									<td>
 										<a href="#" class="btn btn-success btn-sm">
@@ -291,7 +309,7 @@
 											Unduh
 										</a>
 									</td>
-								</tr> --}}
+								</tr>
 							@endif
 						@endif
 					</table>

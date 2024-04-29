@@ -12,7 +12,21 @@ class ReportController extends Controller
     public function users(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::all();
+            $data = User::query();
+
+            $type = $request->input('type');
+
+            if (isset($type)) {
+                if ($type === 'pelapor') {
+                    $data->whereDoesntHave('atasan');
+                    $data->whereDoesntHave('komisi');
+                    $data->whereDoesntHave('admin');
+                    $data->whereDoesntHave('manager');
+                } else {
+                    $data->whereHas($type);
+                }
+            }
+
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->make(true);
