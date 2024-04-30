@@ -32,6 +32,8 @@ return new class extends Migration
             $table->string('examination_place')->nullable(); // Tempat Pemeriksaan
             $table->string('examination_date')->nullable(); // Tanggal Pemeriksaan
             $table->string('examination_time')->nullable(); // Waktu Pemeriksaan
+            $table->string('examination_report')->nullable(); // Waktu Pemeriksaan
+            $table->string('examination_result')->nullable(); // Waktu Pemeriksaan
             $table->date('session_date')->nullable(); // Tanggal Sidang
             $table->string('session_decision_report')->nullable(); // Putusan Sidang
             $table->string('session_official_report')->nullable(); // Berita Acara

@@ -14,4 +14,18 @@ class DownloadController extends Controller
         return $Pdf->stream();
         // return $Pdf->download('Surat-Panggilan-' . $violation->uuid . '.pdf');
     }
+
+    public function surat_permohonan_maaf(Violation $violation)
+    {
+        $Pdf = Pdf::loadView('exports.surat.permohonan-maaf', compact('violation'));
+
+        return $Pdf->stream();
+    }
+
+    public function surat_penyesalan(Violation $violation)
+    {
+        $Pdf = Pdf::loadView('exports.surat.penyesalan', compact('violation'));
+
+        return $Pdf->stream();
+    }
 }

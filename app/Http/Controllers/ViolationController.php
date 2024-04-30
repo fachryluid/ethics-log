@@ -244,6 +244,15 @@ class ViolationController extends Controller
             $violation->examination_place = $request->examination_place;
             $violation->examination_date = $request->examination_date;
             $violation->examination_time = $request->examination_time;
+
+            if ($request->hasFile('examination_report')) {
+                $violation->examination_report = basename($request->file('examination_report')->store('public/uploads/sessions'));
+            }
+
+            if ($request->hasFile('examination_result')) {
+                $violation->examination_result = basename($request->file('examination_result')->store('public/uploads/sessions'));
+            }
+
             $violation->save();
 
             return redirect()->back()->with('success', 'Data berhasil diperbarui');

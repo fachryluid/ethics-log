@@ -60,7 +60,7 @@
 		</table>
 		<div style="margin-bottom: 20px; text-align: justify;">
 			Guna diperiksa/dimintai*) keterangannya sehubungan dengan dugaan
-			Pelanggaran Etik dan Perilaku terhadap ketentuan Pasal {{ $violation->regulation_section }} huruf {{ $violation->regulation_letter }}
+			Pelanggaran Etik dan Perilaku terhadap ketentuan Pasal {{ $violation->regulation_section }} ayat {{ $violation->regulation_letter }}
 			Peraturan Menteri Pendidikan dan Kebudayaan Nomor {{ $violation->regulation_number }} Tahun {{ $violation->regulation_year }}
 			tentang {{ $violation->regulation_about }} berupa {{ $violation->desc }}
 		</div>

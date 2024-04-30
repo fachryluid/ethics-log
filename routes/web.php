@@ -86,6 +86,8 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified'])
     });
     Route::prefix('download')->name('download.')->group(function () {
         Route::get('/surat_panggilan/{violation}', [DownloadController::class, 'surat_panggilan'])->name('surat_panggilan');
+        Route::get('/surat_permohonan_maaf/{violation}', [DownloadController::class, 'surat_permohonan_maaf'])->name('surat_permohonan_maaf');
+        Route::get('/surat_penyesalan/{violation}', [DownloadController::class, 'surat_penyesalan'])->name('surat_penyesalan');
     });
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
