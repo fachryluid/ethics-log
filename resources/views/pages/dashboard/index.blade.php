@@ -89,7 +89,13 @@
 										</div>
 									</div>
 									<div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-										<h6 class="text-muted font-semibold">Pelanggaran</h6>
+										<h6 class="text-muted font-semibold">
+											@if (auth()->user()->isUser())
+												Pengaduan Saya
+											@else
+												Pelanggaran
+											@endif
+										</h6>
 										<h6 class="mb-0 font-extrabold">{{ $count->violations }}</h6>
 									</div>
 								</div>

@@ -43,8 +43,6 @@
 							<select class="form-select filter-select-status">
 								<option value="">Semua</option>
 								<option value="{{ \App\Constants\ViolationStatus::PENDING }}">{{ \App\Constants\ViolationStatus::PENDING }}</option>
-								<option value="{{ \App\Constants\ViolationStatus::RESOLVED }}">{{ \App\Constants\ViolationStatus::RESOLVED }}</option>
-								<option value="{{ \App\Constants\ViolationStatus::SUSPENDED }}">{{ \App\Constants\ViolationStatus::SUSPENDED }}</option>
 								<option value="{{ \App\Constants\ViolationStatus::VERIFIED }}">{{ \App\Constants\ViolationStatus::VERIFIED }}</option>
 								<option value="{{ \App\Constants\ViolationStatus::FORWARDED }}">{{ \App\Constants\ViolationStatus::FORWARDED }}</option>
 								<option value="{{ \App\Constants\ViolationStatus::PROVEN_GUILTY }}">{{ \App\Constants\ViolationStatus::PROVEN_GUILTY }}</option>
