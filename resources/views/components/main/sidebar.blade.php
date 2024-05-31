@@ -61,6 +61,12 @@
 	                'hasSubItems' => false,
 	                'link' => route('dashboard.reports.users'),
 	            ],
+							(object) [
+	                'label' => 'Pelanggaran',
+	                'icon' => 'bi bi-exclamation-triangle-fill',
+	                'hasSubItems' => false,
+	                'link' => route('dashboard.reports.violations'),
+	            ],
 	        ],
 	    ],
 	    (object) [

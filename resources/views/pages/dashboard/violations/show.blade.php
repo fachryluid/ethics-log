@@ -165,11 +165,11 @@
 								</th>
 							</tr>
 							<tr>
-								<th>Dugaan Pelanggaran (UU)</th>
+								<th>Dugaan Pelanggaran Peraturan</th>
 								<td>
 									Pasal <b>{{ $violation->regulation_section ?? '...' }}</b>
-									Huruf <b>{{ $violation->regulation_letter ?? '...' }}</b>
-									Peraturan Menteri Pendidikan dan Kebudayaan
+									Ayat <b>{{ $violation->regulation_letter ?? '...' }}</b>
+									Peraturan Rektor Universitas Negeri Gorontalo
 									Nomor <b>{{ $violation->regulation_number ?? '...' }}</b>
 									Tahun <b>{{ $violation->regulation_year ?? '...' }}</b>
 									Tentang <b>{{ $violation->regulation_about ?? '...' }}</b>
@@ -262,15 +262,17 @@
 									</a>
 								</td>
 							</tr>
-							<tr>
-								<th>Laporan Hasil Pemeriksaan Tentang Dugaan Pelanggaran Kode Etik</th>
-								<td>
-									<a href="{{ asset('storage/uploads/sessions/' . $violation->examination_result) }}" class="btn btn-success btn-sm @if (!$violation->examination_result) opacity-50 @endif">
-										<i class="bi bi-download"></i>
-										Unduh
-									</a>
-								</td>
-							</tr>
+							@if ($violation->status === App\Constants\ViolationStatus::PROVEN_GUILTY)
+								<tr>
+									<th>Laporan Hasil Pemeriksaan Tentang Dugaan Pelanggaran Kode Etik</th>
+									<td>
+										<a href="{{ asset('storage/uploads/sessions/' . $violation->examination_result) }}" class="btn btn-success btn-sm @if (!$violation->examination_result) opacity-50 @endif">
+											<i class="bi bi-download"></i>
+											Unduh
+										</a>
+									</td>
+								</tr>
+							@endif
 							@if ($violation->status === App\Constants\ViolationStatus::PROVEN_GUILTY || $violation->status === App\Constants\ViolationStatus::NOT_PROVEN)
 								<tr>
 									<th>Putusan Komisi Kode Etik</th>
@@ -281,69 +283,71 @@
 										</a>
 									</td>
 								</tr>
-								<tr>
-									<th>Berita Acara Pelaksanaan Putusan Sidang Etik</th>
-									<td>
-										<a href="{{ asset('storage/uploads/sessions/' . $violation->session_official_report) }}" class="btn btn-success btn-sm">
-											<i class="bi bi-download"></i>
-											Unduh
-										</a>
-									</td>
-								</tr>
+								@if ($violation->status === App\Constants\ViolationStatus::PROVEN_GUILTY)
+									<tr>
+										<th>Berita Acara Pelaksanaan Putusan Sidang Etik</th>
+										<td>
+											<a href="{{ asset('storage/uploads/sessions/' . $violation->session_official_report) }}" class="btn btn-success btn-sm">
+												<i class="bi bi-download"></i>
+												Unduh
+											</a>
+										</td>
+									</tr>
+								@endif
 							@endif
 							@if ($violation->status === App\Constants\ViolationStatus::PROVEN_GUILTY)
-							<tr>
-								<th>Surat Pernyataan Permohonan Maaf</th>
-								<td>
-									<x-modal.confirm route="{{ route('dashboard.download.surat_permohonan_maaf', $violation->uuid) }}" method="GET" id="surat-permohonan-maaf" title="Unduh Surat Permohonan Maaf" color="success">
-										<x-slot:btn>
-											<i class="bi bi-download"></i>
-											Unduh
-										</x-slot>
-										<label class="form-label">Nomor Surat</label>
-										<div class="row">
-											<div class="col-3">
-												<input type="text" class="form-control" name="aa" />
+								<tr>
+									<th>Surat Pernyataan Permohonan Maaf</th>
+									<td>
+										<x-modal.confirm route="{{ route('dashboard.download.surat_permohonan_maaf', $violation->uuid) }}" method="GET" id="surat-permohonan-maaf" title="Unduh Surat Permohonan Maaf" color="success">
+											<x-slot:btn>
+												<i class="bi bi-download"></i>
+												Unduh
+											</x-slot>
+											<label class="form-label">Nomor Surat</label>
+											<div class="row">
+												<div class="col-3">
+													<input type="text" class="form-control" name="aa" />
+												</div>
+												<div class="col-3">
+													<input type="text" class="form-control" name="bb" />
+												</div>
+												<div class="col-3">
+													<input type="text" class="form-control" name="cc" />
+												</div>
+												<div class="col-3">
+													<input type="text" class="form-control" name="dd" />
+												</div>
 											</div>
-											<div class="col-3">
-												<input type="text" class="form-control" name="bb" />
+										</x-modal.confirm>
+									</td>
+								</tr>
+								<tr>
+									<th>Surat Pernyataan Penyesalan</th>
+									<td>
+										<x-modal.confirm route="{{ route('dashboard.download.surat_penyesalan', $violation->uuid) }}" method="GET" id="surat-penyesalan" title="Unduh Surat Penyesalan" color="success">
+											<x-slot:btn>
+												<i class="bi bi-download"></i>
+												Unduh
+											</x-slot>
+											<label class="form-label">Nomor Surat</label>
+											<div class="row">
+												<div class="col-3">
+													<input type="text" class="form-control" name="aa" />
+												</div>
+												<div class="col-3">
+													<input type="text" class="form-control" name="bb" />
+												</div>
+												<div class="col-3">
+													<input type="text" class="form-control" name="cc" />
+												</div>
+												<div class="col-3">
+													<input type="text" class="form-control" name="dd" />
+												</div>
 											</div>
-											<div class="col-3">
-												<input type="text" class="form-control" name="cc" />
-											</div>
-											<div class="col-3">
-												<input type="text" class="form-control" name="dd" />
-											</div>
-										</div>
-									</x-modal.confirm>
-								</td>
-							</tr>
-							<tr>
-								<th>Surat Pernyataan Penyesalan</th>
-								<td>
-									<x-modal.confirm route="{{ route('dashboard.download.surat_penyesalan', $violation->uuid) }}" method="GET" id="surat-penyesalan" title="Unduh Surat Penyesalan" color="success">
-										<x-slot:btn>
-											<i class="bi bi-download"></i>
-											Unduh
-										</x-slot>
-										<label class="form-label">Nomor Surat</label>
-										<div class="row">
-											<div class="col-3">
-												<input type="text" class="form-control" name="aa" />
-											</div>
-											<div class="col-3">
-												<input type="text" class="form-control" name="bb" />
-											</div>
-											<div class="col-3">
-												<input type="text" class="form-control" name="cc" />
-											</div>
-											<div class="col-3">
-												<input type="text" class="form-control" name="dd" />
-											</div>
-										</div>
-									</x-modal.confirm>
-								</td>
-							</tr>
+										</x-modal.confirm>
+									</td>
+								</tr>
 							@endif
 						@endif
 					</table>

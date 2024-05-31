@@ -26,14 +26,18 @@ class DashboardController extends Controller
             $violationsQuery->where('user_id', auth()->user()->id);
         }
 
+        if (auth()->user()->isAtasan()) {
+            $violationsQuery->where('department', auth()->user()->atasan->unit_kerja_id);
+        }
+
         $violations = $violationsQuery->get();
 
         $countData['violations'] = FormatUtils::digits(3, $violations->count());
-        $countData['pending'] = $violations->where('status', ViolationStatus::PENDING)->count();
-        $countData['verified'] = $violations->where('status', ViolationStatus::VERIFIED)->count();
-        $countData['forwarded'] = $violations->where('status', ViolationStatus::FORWARDED)->count();
-        $countData['proven_guilty'] = $violations->where('status', ViolationStatus::PROVEN_GUILTY)->count();
-        $countData['not_proven'] = $violations->where('status', ViolationStatus::NOT_PROVEN)->count();
+        $countData['pending'] = FormatUtils::digits(3, $violations->where('status', ViolationStatus::PENDING)->count());
+        $countData['verified'] = FormatUtils::digits(3, $violations->where('status', ViolationStatus::VERIFIED)->count());
+        $countData['forwarded'] = FormatUtils::digits(3, $violations->where('status', ViolationStatus::FORWARDED)->count());
+        $countData['proven_guilty'] = FormatUtils::digits(3, $violations->where('status', ViolationStatus::PROVEN_GUILTY)->count());
+        $countData['not_proven'] = FormatUtils::digits(3, $violations->where('status', ViolationStatus::NOT_PROVEN)->count());
 
         $count = (object)($countData);
 

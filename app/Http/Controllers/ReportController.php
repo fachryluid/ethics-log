@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\ViolationStatus;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Violation;
 use Yajra\DataTables\Facades\DataTables;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -40,6 +42,30 @@ class ReportController extends Controller
         $users = User::all();
 
         $Pdf = Pdf::loadView('exports.users', compact('users'));
+
+        return $Pdf->stream();
+    }
+
+    public function violations(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Violation::query();
+            $data->where('status', ViolationStatus::PROVEN_GUILTY)->orWhere('status', ViolationStatus::NOT_PROVEN);
+            $data->get();
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->make(true);
+        }
+
+        return view('pages.dashboard.reports.violations');
+    }
+
+    public function violations_pdf_preview(Request $request)
+    {
+        $violations = Violation::where('status', ViolationStatus::PROVEN_GUILTY)->orWhere('status', ViolationStatus::NOT_PROVEN)->get();
+
+        $Pdf = Pdf::loadView('exports.violations', compact('violations'));
 
         return $Pdf->stream();
     }
