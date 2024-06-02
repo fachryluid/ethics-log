@@ -1,5 +1,5 @@
 @extends('layouts.export')
-@section('title', 'Laporan Hasil Pengadilan')
+@section('title', 'Laporan Hasil Pengaduan')
 @section('content')
 	<table class="table-striped table">
 		<thead>
