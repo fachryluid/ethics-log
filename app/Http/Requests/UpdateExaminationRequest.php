@@ -17,6 +17,8 @@ class UpdateExaminationRequest extends FormRequest
             'examination_place' => 'required',
             'examination_date' => 'required',
             'examination_time' => 'required',
+            'examination_report' => 'nullable|file|mimes:pdf|max:10240',
+            'examination_result' => 'nullable|file|mimes:pdf|max:10240',
         ];
     }
 }

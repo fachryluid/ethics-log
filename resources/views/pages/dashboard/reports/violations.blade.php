@@ -39,6 +39,7 @@
 								<th>Jenis Kode Etik</th>
 								<th>Deskripsi</th>
 								<th>Status</th>
+								<th style="white-space: nowrap">Aksi</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -56,9 +57,11 @@
 				serverSide: true,
 				ajax: {
 					url: "{{ route('dashboard.reports.violations') }}",
-					// data: function(d) {
-					// 	d.type = $('.filter-select').val();
-					// }
+					data: function(d) {
+						if ("{{ request('status') }}") {
+							d.status = "{{ request('status') }}"
+						}
+					}
 				},
 				columns: [{
 						data: 'offender',
@@ -76,6 +79,11 @@
 					{
 						data: 'status',
 						name: 'status',
+						orderable: false,
+					},
+					{
+						data: 'action',
+						name: 'action',
 						orderable: false,
 					}
 				]

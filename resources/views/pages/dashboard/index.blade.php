@@ -1,3 +1,6 @@
+@php
+	use App\Constants\ViolationStatus;
+@endphp
 @extends('layouts.dashboard', [
     'breadcrumbs' => [
         'Dashboard' => null,
@@ -61,10 +64,12 @@
 									<i class="iconly-boldTime-Circle"></i>
 								</div>
 								<h6 class="text-muted font-semibold">Pending</h6>
-								<a href="{{ route('dashboard.violations.index') }}" class="fw-bold">
-									Detail
-									<i class="bi bi-arrow-right-short"></i>
-								</a>
+								@if (auth()->user()->isManager())
+									<a href="{{ route('dashboard.reports.violations', ['status' => ViolationStatus::PENDING]) }}" class="fw-bold">
+										Detail
+										<i class="bi bi-arrow-right-short"></i>
+									</a>
+								@endif
 							</div>
 							<h1 class="mb-0 font-extrabold">{{ $count->pending }}</h1>
 						</div>
@@ -78,10 +83,12 @@
 									<i class="iconly-boldSetting"></i>
 								</div>
 								<h6 class="text-muted font-semibold">Proses</h6>
-								<a href="{{ route('dashboard.violations.index') }}" class="fw-bold">
-									Detail
-									<i class="bi bi-arrow-right-short"></i>
-								</a>
+								@if (auth()->user()->isManager())
+									<a href="{{ route('dashboard.reports.violations', ['status' => ViolationStatus::VERIFIED]) }}" class="fw-bold">
+										Detail
+										<i class="bi bi-arrow-right-short"></i>
+									</a>
+								@endif
 							</div>
 							<h1 class="mb-0 font-extrabold">{{ $count->verified }}</h1>
 						</div>
@@ -95,10 +102,12 @@
 									<i class="iconly-boldArrow---Right"></i>
 								</div>
 								<h6 class="text-muted font-semibold">Diteruskan ke Komisi Kode Etik</h6>
-								<a href="{{ route('dashboard.violations.index') }}" class="fw-bold">
-									Detail
-									<i class="bi bi-arrow-right-short"></i>
-								</a>
+								@if (auth()->user()->isManager())
+									<a href="{{ route('dashboard.reports.violations', ['status' => ViolationStatus::FORWARDED]) }}" class="fw-bold">
+										Detail
+										<i class="bi bi-arrow-right-short"></i>
+									</a>
+								@endif
 							</div>
 							<h1 class="mb-0 font-extrabold">{{ $count->forwarded }}</h1>
 						</div>
@@ -112,10 +121,12 @@
 									<i class="iconly-boldClose-Square"></i>
 								</div>
 								<h6 class="text-muted font-semibold">Tidak Terbukti</h6>
-								<a href="{{ route('dashboard.violations.index') }}" class="fw-bold">
-									Detail
-									<i class="bi bi-arrow-right-short"></i>
-								</a>
+								@if (auth()->user()->isManager())
+									<a href="{{ route('dashboard.reports.violations', ['status' => ViolationStatus::NOT_PROVEN]) }}" class="fw-bold">
+										Detail
+										<i class="bi bi-arrow-right-short"></i>
+									</a>
+								@endif
 							</div>
 							<h1 class="mb-0 font-extrabold">{{ $count->not_proven }}</h1>
 						</div>
@@ -129,10 +140,12 @@
 									<i class="iconly-boldTick-Square"></i>
 								</div>
 								<h6 class="text-muted font-semibold">Terbukti</h6>
-								<a href="{{ route('dashboard.violations.index') }}" class="fw-bold">
-									Detail
-									<i class="bi bi-arrow-right-short"></i>
-								</a>
+								@if (auth()->user()->isManager())
+									<a href="{{ route('dashboard.reports.violations', ['status' => ViolationStatus::PROVEN_GUILTY]) }}" class="fw-bold">
+										Detail
+										<i class="bi bi-arrow-right-short"></i>
+									</a>
+								@endif
 							</div>
 							<h1 class="mb-0 font-extrabold">{{ $count->proven_guilty }}</h1>
 						</div>

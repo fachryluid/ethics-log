@@ -67,6 +67,7 @@ Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified'])
         Route::get('/users', [ReportController::class, 'users'])->name('users');
         Route::get('/users/pdf/preview', [ReportController::class, 'users_pdf_preview'])->name('users.pdf.preview');
         Route::get('/violations', [ReportController::class, 'violations'])->name('violations');
+        Route::get('/violations/{violation}', [ReportController::class, 'violations_show'])->name('violations.show');
         Route::get('/violations/pdf/preview', [ReportController::class, 'violations_pdf_preview'])->name('violations.pdf.preview');
     });
     Route::prefix('profile')->name('profile.')->middleware([])->group(function () {
