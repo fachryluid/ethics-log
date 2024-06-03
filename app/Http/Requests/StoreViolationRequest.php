@@ -32,7 +32,7 @@ class StoreViolationRequest extends FormRequest
             'date' => 'required|date',
             'place' => 'required',
             'desc' => 'required|string',
-            'evidence' => 'required|file|mimes:jpeg,png,gif,mp4,avi,mov,zip,rar|max:10240',
+            'evidence' => 'required|file|mimes:jpeg,png,gif,pdf,mp4,avi,mov,mp3,wav,zip,rar|max:10240',
         ];
     }
 

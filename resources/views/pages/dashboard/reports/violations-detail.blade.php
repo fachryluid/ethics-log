@@ -110,7 +110,31 @@
 						<tr>
 							<th>Bukti</th>
 							<td>
-								<a href="{{ asset('storage/uploads/evidences/' . $violation->evidence) }}">{{ $violation->evidence }}</a>
+								@php
+									$fileUrl = asset('storage/uploads/evidences/' . $violation->evidence);
+									$fileExtension = pathinfo($violation->evidence, PATHINFO_EXTENSION);
+									$imageExtensions = ['jpeg', 'jpg', 'png', 'gif'];
+									$pdfExtensions = ['pdf'];
+									$videoExtensions = ['mp4', 'avi', 'mov'];
+									$audioExtensions = ['mp3', 'wav'];
+								@endphp
+								@if (in_array($fileExtension, $imageExtensions))
+									<img src="{{ $fileUrl }}" alt="Evidence Image" style="max-width: 100%; height: auto;">
+								@elseif (in_array($fileExtension, $pdfExtensions))
+									<iframe src="/ViewerJS/#../storage/uploads/evidences/{{ $violation->evidence }}" width="100%" height="500" allowfullscreen webkitallowfullscreen></iframe>
+								@elseif (in_array($fileExtension, $videoExtensions))
+									<video controls width="100%">
+										<source src="{{ $fileUrl }}" type="video/{{ $fileExtension }}">
+										Your browser does not support the video tag.
+									</video>
+								@elseif (in_array($fileExtension, $audioExtensions))
+									<audio controls>
+										<source src="{{ $fileUrl }}" type="audio/{{ $fileExtension }}">
+										Your browser does not support the audio element.
+									</audio>
+								@else
+									<a href="{{ $fileUrl }}">{{ $violation->evidence }}</a>
+								@endif
 							</td>
 						</tr>
 						<tr>
