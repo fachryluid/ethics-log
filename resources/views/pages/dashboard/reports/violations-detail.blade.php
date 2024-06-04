@@ -207,32 +207,6 @@
 							</th>
 						</tr>
 						<tr>
-							<th>Surat Pemanggilan</th>
-							<td>
-								<x-modal.confirm route="{{ route('dashboard.download.surat_panggilan', $violation->uuid) }}" method="GET" id="surat-panggilan" title="Unduh Surat Panggilan" color="success">
-									<x-slot:btn>
-										<i class="bi bi-download"></i>
-										Unduh
-									</x-slot>
-									<label class="form-label">Nomor Surat</label>
-									<div class="row">
-										<div class="col-3">
-											<input type="text" class="form-control" name="aa" />
-										</div>
-										<div class="col-3">
-											<input type="text" class="form-control" name="bb" />
-										</div>
-										<div class="col-3">
-											<input type="text" class="form-control" name="cc" />
-										</div>
-										<div class="col-3">
-											<input type="text" class="form-control" name="dd" />
-										</div>
-									</div>
-								</x-modal.confirm>
-							</td>
-						</tr>
-						<tr>
 							<th>Berita Acara Pemeriksaaan</th>
 							<td>
 								@if ($violation->examination_report)
@@ -269,60 +243,6 @@
 									</td>
 								</tr>
 							@endif
-						@endif
-						@if ($violation->status === App\Constants\ViolationStatus::PROVEN_GUILTY)
-							<tr>
-								<th>Surat Pernyataan Permohonan Maaf</th>
-								<td>
-									<x-modal.confirm route="{{ route('dashboard.download.surat_permohonan_maaf', $violation->uuid) }}" method="GET" id="surat-permohonan-maaf" title="Unduh Surat Permohonan Maaf" color="success">
-										<x-slot:btn>
-											<i class="bi bi-download"></i>
-											Unduh
-										</x-slot>
-										<label class="form-label">Nomor Surat</label>
-										<div class="row">
-											<div class="col-3">
-												<input type="text" class="form-control" name="aa" />
-											</div>
-											<div class="col-3">
-												<input type="text" class="form-control" name="bb" />
-											</div>
-											<div class="col-3">
-												<input type="text" class="form-control" name="cc" />
-											</div>
-											<div class="col-3">
-												<input type="text" class="form-control" name="dd" />
-											</div>
-										</div>
-									</x-modal.confirm>
-								</td>
-							</tr>
-							<tr>
-								<th>Surat Pernyataan Penyesalan</th>
-								<td>
-									<x-modal.confirm route="{{ route('dashboard.download.surat_penyesalan', $violation->uuid) }}" method="GET" id="surat-penyesalan" title="Unduh Surat Penyesalan" color="success">
-										<x-slot:btn>
-											<i class="bi bi-download"></i>
-											Unduh
-										</x-slot>
-										<label class="form-label">Nomor Surat</label>
-										<div class="row">
-											<div class="col-3">
-												<input type="text" class="form-control" name="aa" />
-											</div>
-											<div class="col-3">
-												<input type="text" class="form-control" name="bb" />
-											</div>
-											<div class="col-3">
-												<input type="text" class="form-control" name="cc" />
-											</div>
-											<div class="col-3">
-												<input type="text" class="form-control" name="dd" />
-											</div>
-										</div>
-									</x-modal.confirm>
-								</td>
-							</tr>
 						@endif
 					</table>
 				</div>
