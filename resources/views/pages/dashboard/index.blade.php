@@ -47,7 +47,7 @@
 										Pelanggaran
 									@endif
 								</h6>
-								<a href="{{ route('dashboard.violations.index') }}" class="fw-bold">
+								<a href="{{ auth()->user()->isManager() ? route('dashboard.reports.violations') : route('dashboard.violations.index') }}" class="fw-bold">
 									Detail
 									<i class="bi bi-arrow-right-short"></i>
 								</a>

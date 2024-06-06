@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('place');
             $table->string('regulation_section', 3)->nullable(); // Ketantuan Pasal
             $table->string('regulation_letter', 3)->nullable(); // Ketentuan Huruf
-            $table->string('regulation_number', 3)->nullable(); // Nomor Peraturan Menteri
+            $table->string('regulation_number', 32)->nullable(); // Nomor Peraturan Menteri
             $table->string('regulation_year', 4)->nullable(); // Tahun Peraturan Menteri
             $table->string('regulation_about')->nullable(); // Tentang Peraturan Menteri
             $table->string('examination_place')->nullable(); // Tempat Pemeriksaan

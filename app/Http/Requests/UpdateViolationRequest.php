@@ -14,7 +14,7 @@ class UpdateViolationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nip' => 'required|numeric|unique:violations,nip',
+            'nip' => "required|numeric|unique:violations,nip,{$this->violation->id}",
             'offender' => 'required|string',
             'class' => 'required',
             'position' => 'required',

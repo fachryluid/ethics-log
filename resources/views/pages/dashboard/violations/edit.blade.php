@@ -23,7 +23,7 @@
 							<label for="class">Pangkat / Golongan</label>
 						</div>
 						<div class="col-md-8 form-group">
-							<select name="class" id="class" class="form-select">
+							<select name="class" id="class" class="form-select @error('class') is-invalid @enderror">
 								<option value="" hidden>Pilih Pangkat / Golongan</option>
 								<optgroup label="Dosen PNS">
 									<option value="Dosen PNS - Golongan III A">Golongan III A</option>

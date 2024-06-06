@@ -16,9 +16,9 @@ class UpdateProvisionRequest extends FormRequest
         return [
             'regulation_section' => 'required',
             'regulation_letter' => 'required',
-            'regulation_number' => 'required',
-            'regulation_year' => 'required',
-            'regulation_about' => 'required',
+            'regulation_number' => 'nullable',
+            'regulation_year' => 'nullable',
+            'regulation_about' => 'nullable',
         ];
     }
 

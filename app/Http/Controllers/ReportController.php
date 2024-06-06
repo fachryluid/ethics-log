@@ -50,7 +50,7 @@ class ReportController extends Controller
     {
         if ($request->ajax()) {
             $data = Violation::query();
-            if ($request->has('status')) $data->where('status', $request->status);
+            if ($request->status) $data->where('status', $request->status);
             $data->get();
 
             return DataTables::of($data)

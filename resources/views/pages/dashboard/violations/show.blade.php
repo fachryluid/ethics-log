@@ -256,7 +256,7 @@
 							<tr>
 								<th>Berita Acara Pemeriksaaan</th>
 								<td>
-									<a href="{{ asset('storage/uploads/sessions/' . $violation->examination_report) }}" class="btn btn-success btn-sm @if (!$violation->examination_report) opacity-50 @endif">
+									<a href="{{ $violation->examination_report ? asset('storage/uploads/sessions/' . $violation->examination_report) : 'javascript::void' }}" class="btn btn-success btn-sm @if (!$violation->examination_report) opacity-50 @endif">
 										<i class="bi bi-download"></i>
 										Unduh
 									</a>

@@ -34,23 +34,27 @@
 						<div class="col-md-4">
 							<label>Peraturan Rektor Universitas Negeri Gorontalo</label>
 						</div>
-						<div class="col-md-2 form-group">
-							<input type="text" class="form-control @error('regulation_number') is-invalid @enderror" name="regulation_number" id="regulation_number" placeholder="Nomor" value="{{ old('regulation_number') ?? $violation->regulation_number }}" />
-							@error('regulation_number')
-								<div class="invalid-feedback">{{ $message }}</div>
-							@enderror
-						</div>
-						<div class="col-md-2 form-group">
-							<input type="text" class="form-control @error('regulation_year') is-invalid @enderror" name="regulation_year" id="regulation_year" placeholder="Tahun" value="{{ old('regulation_year') ?? $violation->regulation_year }}" />
-							@error('regulation_year')
-								<div class="invalid-feedback">{{ $message }}</div>
-							@enderror
-						</div>
-						<div class="col-md-4 form-group">
-							<input type="text" class="form-control @error('regulation_about') is-invalid @enderror" name="regulation_about" id="regulation_about" placeholder="Tentang" value="{{ old('regulation_about') ?? $violation->regulation_about }}" />
-							@error('regulation_about')
-								<div class="invalid-feedback">{{ $message }}</div>
-							@enderror
+						<div class="col-md-8">
+							<div class="row">
+								<div class="col-md-6 form-group">
+									<input type="text" class="form-control @error('regulation_number') is-invalid @enderror" name="regulation_number" id="regulation_number" placeholder="Nomor" value="199/UN47/KP/2020" disabled />
+									@error('regulation_number')
+										<div class="invalid-feedback">{{ $message }}</div>
+									@enderror
+								</div>
+								<div class="col-md-6 form-group">
+									<input type="text" class="form-control @error('regulation_year') is-invalid @enderror" name="regulation_year" id="regulation_year" placeholder="Tahun" value="2020" disabled />
+									@error('regulation_year')
+										<div class="invalid-feedback">{{ $message }}</div>
+									@enderror
+								</div>
+								<div class="col-md-12 form-group">
+									<input type="text" class="form-control @error('regulation_about') is-invalid @enderror" name="regulation_about" id="regulation_about" placeholder="Tentang" value="Kode Etik Pegawai Negeri Sipil di Lingkungan Universitas Negeri Gorontalo" disabled />
+									@error('regulation_about')
+										<div class="invalid-feedback">{{ $message }}</div>
+									@enderror
+								</div>
+							</div>
 						</div>
 					</x-form.layout.horizontal>
 				</div>

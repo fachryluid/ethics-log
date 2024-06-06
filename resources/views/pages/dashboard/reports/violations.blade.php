@@ -1,4 +1,5 @@
 @php
+	use App\Constants\ViolationStatus;
 	$_USER = App\Constants\UserRole::USER;
 	$_ATASAN = App\Constants\UserRole::ATASAN_UNIT_KERJA;
 	$_KOMISI = App\Constants\UserRole::KOMISI_KODE_ETIK;
@@ -20,6 +21,37 @@
 @endpush
 @section('content')
 	<section class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title pl-1">Filter</h4>
+				</div>
+				<div class="card-body table-responsive px-4">
+					<div class="row">
+						{{-- <div class="col-6">
+							<label class="form-label">Jenis Kode Etik</label>
+							<select class="form-select filter-select-type">
+								<option value="">Semua</option>
+								@foreach (\App\Constants\EthicsCode::TYPES as $type)
+									<option value="{{ $type }}">{{ $type }}</option>
+								@endforeach
+							</select>
+						</div> --}}
+						<div class="col-12">
+							<label class="form-label">Status</label>
+							<select class="form-select filter-select-status">
+								<option value="">Semua</option>
+								<option value="{{ ViolationStatus::PENDING }}" {{ request('status') === ViolationStatus::PENDING ? 'selected' : '' }}>{{ ViolationStatus::PENDING }}</option>
+								<option value="{{ ViolationStatus::VERIFIED }}" {{ request('status') === ViolationStatus::VERIFIED ? 'selected' : '' }}>{{ ViolationStatus::VERIFIED }}</option>
+								<option value="{{ ViolationStatus::FORWARDED }}" {{ request('status') === ViolationStatus::FORWARDED ? 'selected' : '' }}>{{ ViolationStatus::FORWARDED }}</option>
+								<option value="{{ ViolationStatus::PROVEN_GUILTY }}" {{ request('status') === ViolationStatus::PROVEN_GUILTY ? 'selected' : '' }}>{{ ViolationStatus::PROVEN_GUILTY }}</option>
+								<option value="{{ ViolationStatus::NOT_PROVEN }}" {{ request('status') === ViolationStatus::NOT_PROVEN ? 'selected' : '' }}>{{ ViolationStatus::NOT_PROVEN }}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex justify-content-between align-items-center">
@@ -58,9 +90,7 @@
 				ajax: {
 					url: "{{ route('dashboard.reports.violations') }}",
 					data: function(d) {
-						if ("{{ request('status') }}") {
-							d.status = "{{ request('status') }}"
-						}
+						d.status = $('.filter-select-status').val() ?? "{{ request('status') }}"
 					}
 				},
 				columns: [{
@@ -89,9 +119,9 @@
 				]
 			});
 
-			// $('.filter-select').change(function() {
-			// 	table.ajax.reload();
-			// });
+			$('.filter-select-status').change(function() {
+				table.ajax.reload();
+			});
 		});
 	</script>
 @endpush

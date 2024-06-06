@@ -222,9 +222,9 @@ class ViolationController extends Controller
         try {
             $violation->regulation_section = $request->regulation_section;
             $violation->regulation_letter = $request->regulation_letter;
-            $violation->regulation_number = $request->regulation_number;
-            $violation->regulation_year = $request->regulation_year;
-            $violation->regulation_about = $request->regulation_about;
+            $violation->regulation_number = "199/UN47/KP/2020";
+            $violation->regulation_year = "2020";
+            $violation->regulation_about = "Kode Etik Pegawai Negeri Sipil di Lingkungan Universitas Negeri Gorontalo";
             $violation->save();
 
             return redirect()->back()->with('success', 'Data berhasil diperbarui');
