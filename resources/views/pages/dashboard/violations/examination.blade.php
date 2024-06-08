@@ -1,3 +1,6 @@
+@php
+	use App\Constants\ViolationStatus;
+@endphp
 @extends('layouts.dashboard', [
     'breadcrumbs' => [
         'Dasbor' => route('dashboard.index'),
@@ -20,7 +23,9 @@
 						<x-form.input layout="horizontal" type="date" name="examination_date" label="Tanggal Pemeriksaan" :value="$violation->examination_date" />
 						<x-form.input layout="horizontal" type="time" name="examination_time" label="Waktu Pemeriksaan" :value="$violation->examination_time" />
 						<x-form.input layout="horizontal" type="file" name="examination_report" label="Berita Acara Pemeriksaaan" />
-						<x-form.input layout="horizontal" type="file" name="examination_result" label="Laporan Hasil Pemeriksaan Tentang Dugaan Pelanggaran Kode Etik" />
+						@if ($violation->status === ViolationStatus::PROVEN_GUILTY)
+							<x-form.input layout="horizontal" type="file" name="examination_result" label="Laporan Hasil Pemeriksaan Tentang Dugaan Pelanggaran Kode Etik" />
+						@endif
 					</x-form.layout.horizontal>
 				</div>
 			</div>

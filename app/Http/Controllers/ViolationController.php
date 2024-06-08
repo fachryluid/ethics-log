@@ -202,7 +202,10 @@ class ViolationController extends Controller
         try {
             $violation->session_date = $request->session_date;
             $violation->session_decision_report = basename($request->file('session_decision_report')->store('public/uploads/sessions'));
-            $violation->session_official_report = basename($request->file('session_official_report')->store('public/uploads/sessions'));
+            if ($request->hasFile('session_official_report')) {
+                $sessionOfficialReportPath = $request->file('session_official_report')->store('public/uploads/sessions');
+                $violation->session_official_report = basename($sessionOfficialReportPath);
+            }
             $violation->status = $request->status;
             $violation->save();
 
