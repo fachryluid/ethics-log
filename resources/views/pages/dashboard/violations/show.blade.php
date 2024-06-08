@@ -266,7 +266,7 @@
 								<tr>
 									<th>Laporan Hasil Pemeriksaan Tentang Dugaan Pelanggaran Kode Etik</th>
 									<td>
-										<a href="{{ asset('storage/uploads/sessions/' . $violation->examination_result) }}" class="btn btn-success btn-sm @if (!$violation->examination_result) opacity-50 @endif">
+										<a href="{{ $violation->examination_result ? asset('storage/uploads/sessions/' . $violation->examination_result) : 'javascript::void' }}" class="btn btn-success btn-sm @if (!$violation->examination_result) opacity-50 @endif">
 											<i class="bi bi-download"></i>
 											Unduh
 										</a>
