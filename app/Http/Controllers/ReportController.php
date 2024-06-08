@@ -55,6 +55,9 @@ class ReportController extends Controller
 
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('status', function ($row) {
+                    return view('components.badge.violation-status', ['status' => $row->status])->render();
+                })
                 ->addColumn('action', function ($row) {
                     $actionBtn = '
                         <a href="' . route('dashboard.reports.violations.show', $row->uuid) . '" class="btn btn-primary btn-sm" style="white-space: nowrap">
@@ -64,7 +67,7 @@ class ReportController extends Controller
                         ';
                     return $actionBtn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'status'])
                 ->make(true);
         }
 
