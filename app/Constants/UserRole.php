@@ -8,5 +8,5 @@ class UserRole
   public const ADMIN = 'ADMIN KEPEGAWAIAN';
   public const MANAGER = 'PIMPINAN';
   public const KOMISI_KODE_ETIK = 'KOMISI KODE ETIK';
-  public const ATASAN_UNIT_KERJA = 'ATASAN UNIT KERJA';
+  public const ATASAN_UNIT_KERJA = 'ATASAN PEGAWAI';
 }
