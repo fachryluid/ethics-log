@@ -41,6 +41,7 @@
 	                'icon' => 'bi bi-exclamation-triangle-fill',
 	                'hasSubItems' => false,
 	                'link' => route('dashboard.violations.index'),
+									'count' => $violationProcessCount
 	            ],
 							(object) [
 	                'roles' => [$_USER],
@@ -165,9 +166,12 @@
 									</li>
 								@else
 									<li class="sidebar-item">
-										<a href="{{ $item->link }}" class='sidebar-link'>
+										<a href="{{ $item->link }}" class='sidebar-link d-flex'>
 											<i class="{{ $item->icon }}"></i>
-											<span>{{ $item->label }}</span>
+											<span class="flex-grow-1">{{ $item->label }}</span>
+											@if (isset($item->count))
+												<span class="badge bg-light-dark">{{ $item->count }}</span>
+											@endif
 										</a>
 									</li>
 								@endif

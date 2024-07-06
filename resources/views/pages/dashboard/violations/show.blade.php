@@ -18,7 +18,7 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header d-flex justify-content-between align-items-center">
-					<h4 class="card-title pl-1">Detail {{ $title }}</h4>
+					<h4 class="card-title pl-1">Detail {{ $title }} <br> <small class="fw-normal fs-6">Terakhir kali diedit ({{ $violation->updated_at->diffForHumans() }})</small></h4>
 					<div class="d-flex gap-2">
 						@if (auth()->user()->isAtasan() && $violation->status === App\Constants\ViolationStatus::PENDING)
 							<x-modal.confirm route="{{ route('dashboard.violations.verify', $violation->uuid) }}" method="PATCH" id="verifikasi" title="Verifikasi">
