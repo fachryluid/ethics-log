@@ -26,7 +26,7 @@
 				<div class="card-body px-4">
 					<x-form.layout.horizontal action="{{ route('dashboard.violations.store') }}" method="POST" enctype="multipart/form-data">
 						<h6 class="mb-4">Terlapor</h6>
-						@if ($role == $_ADMIN)
+						
 							{{-- <x-form.input layout="horizontal" name="nip" label="NIP" placeholder="Nomor Identitas Pegawai Terlapor" maxlength="18" /> --}}
 							<x-form.select layout="horizontal" name="nip" label="Pegawai" class="choices" :value="request('nip')" :options="$pegawais->map(function ($pegawai) {
 							    return (object) [
@@ -34,9 +34,9 @@
 							        'value' => $pegawai->nip,
 							    ];
 							})" />
-						@endif
+						
 						<x-form.input layout="horizontal" name="offender" label="Nama Terlapor" :readonly="$role == $_ADMIN ? true : false" :value="$selectedPegawai?->name" />
-						@if ($role == $_ADMIN)
+						
 							{{-- <div class="col-md-4">
 								<label for="class">Pangkat / Golongan</label>
 							</div>
@@ -86,18 +86,18 @@
 							    ];
 							})" /> --}}
 							<x-form.input layout="horizontal" name="position" label="Jabatan" readonly :value="$selectedPegawai?->position" />
-						@endif
-						@if ($role == $_ADMIN)
+						
+						
 							<x-form.input layout="horizontal" name="department_readonly" label="Unit Kerja" readonly :value="$selectedPegawai?->department" />
 							<input type="hidden" name="department" value="{{ $selectedPegawai?->unitKerjaId }}">
-						@else
-							<x-form.select layout="horizontal" name="department" label="Unit Kerja" :options="$units->map(function ($unit) {
+						
+							{{-- <x-form.select layout="horizontal" name="department" label="Unit Kerja" :options="$units->map(function ($unit) {
 							    return (object) [
 							        'label' => $unit->name,
 							        'value' => $unit->id,
 							    ];
-							})" />
-						@endif
+							})" /> --}}
+						
 						<h6 class="mb-4 mt-3">Bentuk Pelanggaran Kode Etik</h6>
 						<x-form.select layout="horizontal" name="type" label="Jenis Kode Etik" :options="collect(\App\Constants\EthicsCode::TYPES)->map(function ($type) {
 						    return (object) [
