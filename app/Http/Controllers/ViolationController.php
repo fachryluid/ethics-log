@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateExaminationRequest;
 use App\Http\Requests\UpdateProvisionRequest;
 use App\Http\Requests\UpdateVerdictRequest;
 use App\Http\Requests\UpdateViolationRequest;
+use App\Models\Pegawai;
 use App\Models\UnitKerja;
 use App\Models\Violation;
 use App\Utils\AuthUtils;
@@ -66,11 +67,22 @@ class ViolationController extends Controller
         return view('pages.dashboard.violations.index');
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $units = UnitKerja::all();
+        $pegawais = Pegawai::all();
+        $selectedPegawai = null;
 
-        return view('pages.dashboard.violations.create', compact('units'));
+        if ($request->has('nip')) {
+            $selectedPegawai = Pegawai::where('nip', $request->nip)->first();
+
+            if ($selectedPegawai) {
+                $unitKerja = UnitKerja::where('name', $selectedPegawai->department)->first();
+                $selectedPegawai->unitKerjaId = $unitKerja ? $unitKerja->id : null;
+            }
+        }
+
+        return view('pages.dashboard.violations.create', compact('pegawais', 'selectedPegawai', 'units'));
     }
 
     public function store(StoreViolationRequest $request)
@@ -110,11 +122,21 @@ class ViolationController extends Controller
         return view('pages.dashboard.violations.show', compact('violation'));
     }
 
-    public function edit(Violation $violation)
+    public function edit(Request $request, Violation $violation)
     {
-        $units = UnitKerja::all();
+        $pegawais = Pegawai::all();
+        $selectedPegawai = null;
 
-        return view('pages.dashboard.violations.edit', compact('violation', 'units'));
+        if ($request->has('nip')) {
+            $selectedPegawai = Pegawai::where('nip', $request->nip)->first();
+
+            if ($selectedPegawai) {
+                $unitKerja = UnitKerja::where('name', $selectedPegawai->department)->first();
+                $selectedPegawai->unitKerjaId = $unitKerja ? $unitKerja->id : null;
+            }
+        }
+
+        return view('pages.dashboard.violations.edit', compact('violation', 'pegawais', 'selectedPegawai'));
     }
 
     public function update(UpdateViolationRequest $request, Violation $violation)
@@ -129,7 +151,7 @@ class ViolationController extends Controller
             $violation->offender = $request->offender;
             $violation->class = $request->class;
             $violation->position = $request->position;
-            // $violation->department = $request->department;
+            $violation->department = $request->department;
             // $violation->type = $request->type;
             // $violation->date = $request->date;
             // $violation->place = $request->place;
@@ -178,7 +200,7 @@ class ViolationController extends Controller
                 'class' => 'required',
                 'position' => 'required',
             ]);
-    
+
             if ($validator->fails()) {
                 return redirect()->back()->withErrors('Data belum lengkap. Silakan lengkapi data terlebih dahulu!')->withInput();
             }

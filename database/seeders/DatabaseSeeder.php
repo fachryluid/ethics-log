@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UnitKerjaSeeder::class);
         $this->call(AtasanUnitKerjaSeeder::class);
         $this->call(KomisiKodeEtikSeeder::class);
+        $this->call(PegawaiSeeder::class);
     }
 }

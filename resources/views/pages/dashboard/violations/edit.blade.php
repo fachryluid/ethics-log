@@ -7,6 +7,9 @@
     ],
 ])
 @section('title', 'Edit Pelanggaran')
+@push('css')
+	<link rel="stylesheet" href="https://zuramai.github.io/mazer/demo/assets/extensions/choices.js/public/assets/styles/choices.css">
+@endpush
 @section('content')
 	<section class="row">
 		<div class="col-12">
@@ -17,61 +20,17 @@
 				<div class="card-body px-4">
 					<x-form.layout.horizontal action="{{ route('dashboard.violations.update', $violation->uuid) }}" method="PUT" submit-text="Perbarui">
 						<h6 class="mb-4">Terlapor</h6>
-						<x-form.input layout="horizontal" name="nip" label="NIP" placeholder="Nomor Identitas Pegawai Terlapor" maxlength="18" :value="$violation->nip" />
-						<x-form.input layout="horizontal" name="offender" label="Nama Terlapor" placeholder="Nama Lengkap Terlapor" :value="$violation->offender" />
-						<div class="col-md-4">
-							<label for="class">Pangkat / Golongan</label>
-						</div>
-						<div class="col-md-8 form-group">
-							<select name="class" id="class" class="form-select @error('class') is-invalid @enderror">
-								<option value="" hidden>Pilih Pangkat / Golongan</option>
-								<optgroup label="Dosen PNS">
-									<option value="Dosen PNS - Golongan III A">Golongan III A</option>
-									<option value="Dosen PNS - Golongan III B">Golongan III B</option>
-									<option value="Dosen PNS - Golongan III C">Golongan III C</option>
-									<option value="Dosen PNS - Golongan III D">Golongan III D</option>
-									<option value="Dosen PNS - Golongan IV A">Golongan IV A</option>
-									<option value="Dosen PNS - Golongan IV B">Golongan IV B</option>
-									<option value="Dosen PNS - Golongan IV C">Golongan IV C</option>
-									<option value="Dosen PNS - Golongan IV D">Golongan IV D</option>
-									<option value="Dosen PNS - Golongan IV E">Golongan IV E</option>
-								</optgroup>
-								<optgroup label="Dosen P3K">
-									<option value="Dosen P3K - Golongan X">Golongan X</option>
-									<option value="Dosen P3K - Golongan XI">Golongan XI</option>
-								</optgroup>
-								<optgroup label="Pegawai PNS">
-									<option value="Pegawai PNS - Golongan II A">Golongan II A</option>
-									<option value="Pegawai PNS - Golongan II B">Golongan II B</option>
-									<option value="Pegawai PNS - Golongan II C">Golongan II C</option>
-									<option value="Pegawai PNS - Golongan II D">Golongan II D</option>
-									<option value="Pegawai PNS - Golongan III A">Golongan III A</option>
-									<option value="Pegawai PNS - Golongan III B">Golongan III B</option>
-									<option value="Pegawai PNS - Golongan III C">Golongan III C</option>
-									<option value="Pegawai PNS - Golongan III D">Golongan III D</option>
-									<option value="Pegawai PNS - Golongan IV A">Golongan IV A</option>
-									<option value="Pegawai PNS - Golongan IV B">Golongan IV B</option>
-									<option value="Pegawai PNS - Golongan IV C">Golongan IV C</option>
-									<option value="Pegawai PNS - Golongan IV D">Golongan IV D</option>
-									<option value="Pegawai PNS - Golongan IV E">Golongan IV E</option>
-								</optgroup>
-								<optgroup label="Pegawai P3K">
-									<option value="Pegawai P3K - Golongan IX">Golongan IX</option>
-								</optgroup>
-							</select>
-						</div>
-						<x-form.select layout="horizontal" name="position" label="Jabatan" :value="$violation->position" :options="collect(\App\Constants\Options::JABATAN)->map(function ($class) {
+						<x-form.select layout="horizontal" name="nip" label="Pegawai" class="choices" :value="request('nip') ?? $violation->nip" :options="$pegawais->map(function ($pegawai) {
 						    return (object) [
-						        'label' => $class,
-						        'value' => $class,
+						        'label' => $pegawai->name . ' | ' . $pegawai->nip,
+						        'value' => $pegawai->nip,
 						    ];
 						})" />
-						<x-form.select layout="horizontal" name="department" label="Unit Kerja" :value="$violation->department" :disabled="true" :options="$units->map(function ($unit) {
-						    return (object) [
-						        'label' => $unit->name,
-						        'value' => $unit->id,
-						    ];
-						})" />
+						<x-form.input layout="horizontal" name="offender" label="Nama Terlapor" readonly :value="$selectedPegawai?->name ?? $violation->offender" />
+						<x-form.input layout="horizontal" name="class" label="Pangkat / Golongan" readonly :value="$selectedPegawai?->class ?? $violation->class" />
+						<x-form.input layout="horizontal" name="position" label="Jabatan" readonly :value="$selectedPegawai?->position ?? $violation->position" />
+						<x-form.input layout="horizontal" name="department_readonly" label="Unit Kerja" readonly :value="$selectedPegawai?->department ?? $violation->unit_kerja->name" />
+						<input type="hidden" name="department" value="{{ $selectedPegawai?->unitKerjaId }}">
 						<h6 class="mb-4 mt-3">Bentuk Pelanggaran Kode Etik</h6>
 						<x-form.select layout="horizontal" name="type" label="Jenis Kode Etik" :value="$violation->type" :disabled="true" :options="collect(\App\Constants\EthicsCode::TYPES)->map(function ($type) {
 						    return (object) [
@@ -125,3 +84,17 @@
 		</div>
 	</section>
 @endsection
+@push('scripts')
+	<script src="https://zuramai.github.io/mazer/demo/assets/extensions/choices.js/public/assets/scripts/choices.js"></script>
+	<script src="https://zuramai.github.io/mazer/demo/assets/static/js/pages/form-element-select.js"></script>
+	<script>
+		const pegawai = document.getElementById('nip');
+		pegawai.addEventListener('change', (e) => {
+			const selectedOption = pegawai.options[pegawai.selectedIndex].value;
+			let currentUrl = window.location.href;
+			let updatedUrl = new URL(currentUrl);
+			updatedUrl.searchParams.set('nip', selectedOption);
+			window.location.href = updatedUrl.toString();
+		});
+	</script>
+@endpush

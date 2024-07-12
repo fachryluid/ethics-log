@@ -13,6 +13,9 @@
     ],
 ])
 @section('title', 'Tambah ' . $title)
+@push('css')
+	<link rel="stylesheet" href="https://zuramai.github.io/mazer/demo/assets/extensions/choices.js/public/assets/styles/choices.css">
+@endpush
 @section('content')
 	<section class="row">
 		<div class="col-12">
@@ -24,11 +27,17 @@
 					<x-form.layout.horizontal action="{{ route('dashboard.violations.store') }}" method="POST" enctype="multipart/form-data">
 						<h6 class="mb-4">Terlapor</h6>
 						@if ($role == $_ADMIN)
-							<x-form.input layout="horizontal" name="nip" label="NIP" placeholder="Nomor Identitas Pegawai Terlapor" maxlength="18" />
+							{{-- <x-form.input layout="horizontal" name="nip" label="NIP" placeholder="Nomor Identitas Pegawai Terlapor" maxlength="18" /> --}}
+							<x-form.select layout="horizontal" name="nip" label="Pegawai" class="choices" :value="request('nip')" :options="$pegawais->map(function ($pegawai) {
+							    return (object) [
+							        'label' => $pegawai->name . ' | ' . $pegawai->nip,
+							        'value' => $pegawai->nip,
+							    ];
+							})" />
 						@endif
-						<x-form.input layout="horizontal" name="offender" label="Nama Terlapor" placeholder="Nama Lengkap Terlapor" />
+						<x-form.input layout="horizontal" name="offender" label="Nama Terlapor" :readonly="$role == $_ADMIN ? true : false" :value="$selectedPegawai?->name" />
 						@if ($role == $_ADMIN)
-							<div class="col-md-4">
+							{{-- <div class="col-md-4">
 								<label for="class">Pangkat / Golongan</label>
 							</div>
 							<div class="col-md-8 form-group">
@@ -68,20 +77,27 @@
 										<option value="Pegawai P3K - Golongan IX">Golongan IX</option>
 									</optgroup>
 								</select>
-							</div>
-							<x-form.select layout="horizontal" name="position" label="Jabatan" :options="collect(\App\Constants\Options::JABATAN)->map(function ($class) {
+							</div> --}}
+							<x-form.input layout="horizontal" name="class" label="Pangkat / Golongan" readonly :value="$selectedPegawai?->class" />
+							{{-- <x-form.select layout="horizontal" name="position" label="Jabatan" :options="collect(\App\Constants\Options::JABATAN)->map(function ($class) {
 							    return (object) [
 							        'label' => $class,
 							        'value' => $class,
 							    ];
+							})" /> --}}
+							<x-form.input layout="horizontal" name="position" label="Jabatan" readonly :value="$selectedPegawai?->position" />
+						@endif
+						@if ($role == $_ADMIN)
+							<x-form.input layout="horizontal" name="department_readonly" label="Unit Kerja" readonly :value="$selectedPegawai?->department" />
+							<input type="hidden" name="department" value="{{ $selectedPegawai?->unitKerjaId }}">
+						@else
+							<x-form.select layout="horizontal" name="department" label="Unit Kerja" :options="$units->map(function ($unit) {
+							    return (object) [
+							        'label' => $unit->name,
+							        'value' => $unit->id,
+							    ];
 							})" />
 						@endif
-						<x-form.select layout="horizontal" name="department" label="Unit Kerja" :options="$units->map(function ($unit) {
-						    return (object) [
-						        'label' => $unit->name,
-						        'value' => $unit->id,
-						    ];
-						})" />
 						<h6 class="mb-4 mt-3">Bentuk Pelanggaran Kode Etik</h6>
 						<x-form.select layout="horizontal" name="type" label="Jenis Kode Etik" :options="collect(\App\Constants\EthicsCode::TYPES)->map(function ($type) {
 						    return (object) [
@@ -138,4 +154,16 @@
 	</section>
 @endsection
 @push('scripts')
+	<script src="https://zuramai.github.io/mazer/demo/assets/extensions/choices.js/public/assets/scripts/choices.js"></script>
+	<script src="https://zuramai.github.io/mazer/demo/assets/static/js/pages/form-element-select.js"></script>
+	<script>
+		const pegawai = document.getElementById('nip');
+		pegawai.addEventListener('change', (e) => {
+			const selectedOption = pegawai.options[pegawai.selectedIndex].value;
+			let currentUrl = window.location.href;
+			let updatedUrl = new URL(currentUrl);
+			updatedUrl.searchParams.set('nip', selectedOption);
+			window.location.href = updatedUrl.toString();
+		});
+	</script>
 @endpush
