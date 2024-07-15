@@ -157,10 +157,12 @@
 								<th colspan="2">
 									<h6 class="mb-0">
 										Ketentuan
-										<a href="{{ route('dashboard.violations.provision', $violation->uuid) }}" class="text-success float-end">
-											<i class="bi bi-pencil-square"></i>
-											Edit
-										</a>
+										@can('provision', $violation)
+											<a href="{{ route('dashboard.violations.provision', $violation->uuid) }}" class="text-success float-end">
+												<i class="bi bi-pencil-square"></i>
+												Edit
+											</a>
+										@endcan
 									</h6>
 								</th>
 							</tr>
@@ -182,10 +184,12 @@
 								<th colspan="2">
 									<h6 class="mb-0">
 										Pemeriksaan
-										<a href="{{ route('dashboard.violations.examination', $violation->uuid) }}" class="text-success float-end">
-											<i class="bi bi-pencil-square"></i>
-											Edit
-										</a>
+										@can('examination', $violation)
+											<a href="{{ route('dashboard.violations.examination', $violation->uuid) }}" class="text-success float-end">
+												<i class="bi bi-pencil-square"></i>
+												Edit
+											</a>
+										@endcan
 									</h6>
 								</th>
 							</tr>
