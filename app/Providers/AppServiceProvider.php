@@ -19,7 +19,20 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             $setting = Setting::where('id', 1)->first();
-            $violationProcessCount = Violation::where('status', ViolationStatus::VERIFIED)->count();
+
+            $violationProcessCountQuery = Violation::query();
+            if (auth()->user()) {
+                if (auth()->user()->isAdmin()) {
+                    $violationProcessCountQuery->where('status', ViolationStatus::VERIFIED);
+                } elseif (auth()->user()->isKomisi()) {
+                    $violationProcessCountQuery->where('status', ViolationStatus::FORWARDED);
+                } elseif (auth()->user()->isAtasan()) {
+                    $violationProcessCountQuery->where(['status' => ViolationStatus::PENDING, 'department' => auth()->user()->atasan->unit_kerja_id]);
+                } else {
+                    $violationProcessCountQuery->where('status', ViolationStatus::PENDING);
+                }
+            }
+            $violationProcessCount = $violationProcessCountQuery->count();
 
             $view->with('setting', $setting);
             $view->with('violationProcessCount', $violationProcessCount);
