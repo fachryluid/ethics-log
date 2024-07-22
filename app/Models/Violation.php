@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,7 +36,25 @@ class Violation extends Model
         'session_date',
         'session_decision_report',
         'session_official_report',
+        'verified_at'
     ];
+
+    protected $appends = [
+        'formatted_date',
+        'formatted_verified_at',
+    ];
+
+    public function getFormattedDateAttribute(): string
+    {
+        return Carbon::parse($this->date)->translatedFormat('d F Y');
+    }
+
+    public function getFormattedVerifiedAtAttribute(): string
+    {
+        return $this->verified_at
+            ? Carbon::parse($this->verified_at)->translatedFormat('d F Y \P\u\k\u\l H:i \W\I\T\A')
+            : '-';
+    }
 
     public function getRouteKeyName(): string
     {

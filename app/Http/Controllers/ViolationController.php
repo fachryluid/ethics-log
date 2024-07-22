@@ -13,6 +13,7 @@ use App\Models\Pegawai;
 use App\Models\UnitKerja;
 use App\Models\Violation;
 use App\Utils\AuthUtils;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Storage;
@@ -184,6 +185,7 @@ class ViolationController extends Controller
     {
         try {
             $violation->status = ViolationStatus::VERIFIED;
+            $violation->verified_at = Carbon::now();
             $violation->save();
 
             return redirect()->route('dashboard.violations.show', $violation->uuid)->with('success', 'Data telah terverifikasi');

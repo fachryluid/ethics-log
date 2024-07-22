@@ -58,7 +58,7 @@
 						@if ($role == $_ADMIN)
 							<tr>
 								<th colspan="2">
-									<h6 class="mb-0">Pelapor</h6>
+									<h6 class="text-uppercase mb-0">Pelapor</h6>
 								</th>
 							</tr>
 							<tr>
@@ -67,12 +67,15 @@
 							</tr>
 							<tr>
 								<th>No. HP</th>
-								<td>{{ $violation->user->phone }}</td>
+								<td>{{ $violation->user->phone ?? '-' }}</td>
 							</tr>
 						@endif
 						<tr>
+							<td colspan="2" class="py-3"></td>
+						</tr>
+						<tr>
 							<th colspan="2">
-								<h6 class="mb-0">Terlapor</h6>
+								<h6 class="text-uppercase mb-0">Terlapor</h6>
 							</th>
 						</tr>
 						<tr>
@@ -114,11 +117,15 @@
 							<td>{{ $violation->unit_kerja->name }}</td>
 						</tr>
 						<tr>
-							<td colspan="2"></td>
+							<th>Diverifikasi Pada</th>
+							<td>{{ $violation->formatted_verified_at }}</td>
+						</tr>
+						<tr>
+							<td colspan="2" class="py-3"></td>
 						</tr>
 						<tr>
 							<th colspan="2">
-								<h6 class="mb-0">Bentuk Pelanggaran Kode Etik</h6>
+								<h6 class="text-uppercase mb-0">Bentuk Pelanggaran Kode Etik</h6>
 							</th>
 						</tr>
 						<tr>
@@ -127,7 +134,7 @@
 						</tr>
 						<tr>
 							<th>Waktu</th>
-							<td>{{ $violation->date }}</td>
+							<td>{{ $violation->formatted_date }}</td>
 						</tr>
 						<tr>
 							<th>Tempat</th>
@@ -155,7 +162,7 @@
 							</tr>
 							<tr>
 								<th colspan="2">
-									<h6 class="mb-0">
+									<h6 class="text-uppercase mb-0">
 										Ketentuan
 										@can('provision', $violation)
 											<a href="{{ route('dashboard.violations.provision', $violation->uuid) }}" class="text-success float-end">
@@ -182,7 +189,7 @@
 							</tr>
 							<tr>
 								<th colspan="2">
-									<h6 class="mb-0">
+									<h6 class="text-uppercase mb-0">
 										Pemeriksaan
 										@can('examination', $violation)
 											<a href="{{ route('dashboard.violations.examination', $violation->uuid) }}" class="text-success float-end">
@@ -228,7 +235,7 @@
 							</tr>
 							<tr>
 								<th colspan="2">
-									<h6 class="mb-0">Dokumen</h6>
+									<h6 class="text-uppercase mb-0">Dokumen</h6>
 								</th>
 							</tr>
 							<tr>
