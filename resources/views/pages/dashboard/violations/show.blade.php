@@ -117,10 +117,6 @@
 							<td>{{ $violation->unit_kerja->name }}</td>
 						</tr>
 						<tr>
-							<th>Diverifikasi Pada</th>
-							<td>{{ $violation->formatted_verified_at }}</td>
-						</tr>
-						<tr>
 							<td colspan="2" class="py-3"></td>
 						</tr>
 						<tr>
@@ -156,9 +152,13 @@
 								<a href="{{ asset('storage/uploads/evidences/' . $violation->evidence) }}">{{ $violation->evidence }}</a>
 							</td>
 						</tr>
+						<tr>
+							<th>Diverifikasi Pada</th>
+							<td>{{ $violation->formatted_verified_at }}</td>
+						</tr>
 						@if (auth()->user()->isKomisi() && $violation->status !== App\Constants\ViolationStatus::PENDING)
 							<tr>
-								<td colspan="2"></td>
+								<td colspan="2" class="py-3"></td>
 							</tr>
 							<tr>
 								<th colspan="2">
@@ -185,7 +185,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td colspan="2"></td>
+								<td colspan="2" class="py-3"></td>
 							</tr>
 							<tr>
 								<th colspan="2">
@@ -231,7 +231,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td colspan="2"></td>
+								<td colspan="2" class="py-3"></td>
 							</tr>
 							<tr>
 								<th colspan="2">
