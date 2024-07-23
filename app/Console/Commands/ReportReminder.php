@@ -20,13 +20,13 @@ class ReportReminder extends Command
     public function handle()
     {
         try {
+            $setting = Setting::find(1);
             $violations = Violation::where('status', ViolationStatus::VERIFIED)
-                ->where('updated_at', '<=', Carbon::now()->subDays(3))
+                ->where('updated_at', '<=', Carbon::now()->subDays($setting->report_reminder))
                 ->get();
 
             if ($violations->isNotEmpty()) {
                 $admins = User::whereHas('admin')->get();
-                $setting = Setting::where('id', 1)->first();
                 $now = Carbon::now('Asia/Makassar')->format('d-m-Y H:i') . ' WITA';
 
                 foreach ($admins as $admin) {

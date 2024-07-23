@@ -29,6 +29,9 @@
 							<h6 class="mb-3">Laporan</h6>
 							<x-form.editor layout="horizontal" name="report_header" label="KOP Laporan" :value="$setting->report_header" />
 							<x-form.input layout="horizontal" type="file" name="report_logo" label="Logo Laporan" class="image-preview-filepond report-logo" />
+							<h6 class="mb-3">Pelanggaran</h6>
+							<x-form.input layout="horizontal" type="number" min="1" name="auto_forward" label="Auto Forward (Hari)" :value="$setting->auto_forward" />
+							<x-form.input layout="horizontal" type="number" min="1" name="report_reminder" label="Report Reminder (Hari)" :value="$setting->report_reminder" />
 						</x-form.layout.horizontal>
 					</div>
 				</div>

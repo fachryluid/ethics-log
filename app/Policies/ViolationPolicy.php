@@ -45,11 +45,11 @@ class ViolationPolicy
 
     public function provision(User $user, $violation): bool
     {
-        return $user->isKomisi() && $violation->status == ViolationStatus::FORWARDED;;
+        return $user->isKomisi() && ($violation->status == ViolationStatus::FORWARDED || $violation->status == ViolationStatus::PROVEN_GUILTY || $violation->status == ViolationStatus::NOT_PROVEN);
     }
 
     public function examination(User $user, $violation): bool
     {
-        return $user->isKomisi() && $violation->status == ViolationStatus::FORWARDED;
+        return $user->isKomisi() && ($violation->status == ViolationStatus::FORWARDED || $violation->status == ViolationStatus::PROVEN_GUILTY || $violation->status == ViolationStatus::NOT_PROVEN);
     }
 }

@@ -21,13 +21,13 @@ class AutoForward extends Command
     public function handle()
     {
         try {
+            $setting = Setting::find(1);
             $violations = Violation::where('status', ViolationStatus::VERIFIED)
-                ->where('updated_at', '<=', Carbon::now()->subDays(5))
+                ->where('updated_at', '<=', Carbon::now()->subDays($setting->auto_forward))
                 ->get();
 
             if ($violations->isNotEmpty()) {
                 $admins = User::whereHas('admin')->get();
-                $setting = Setting::find(1);
                 $now = Carbon::now('Asia/Makassar')->format('d-m-Y H:i') . ' WITA';
 
                 foreach ($violations as $violation) {

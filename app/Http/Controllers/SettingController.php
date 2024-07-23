@@ -39,6 +39,8 @@ class SettingController extends Controller
             $setting->app_name = $request->app_name;
             $setting->app_desc = $request->app_desc;
             $setting->report_header = $request->report_header;
+            $setting->auto_forward = $request->auto_forward;
+            $setting->report_reminder = $request->report_reminder;
             $setting->update();
             
             return redirect()->back()->with('success', 'Data berhasil diperbarui.');
