@@ -23,7 +23,7 @@
 					<table class="table-striped table-detail table">
 						<tr>
 							<th colspan="2">
-								<h6 class="mb-0">Pelapor</h6>
+								<h6 class="text-uppercase mb-0">Pelapor</h6>
 							</th>
 						</tr>
 						<tr>
@@ -35,8 +35,11 @@
 							<td>{{ $violation->user->phone }}</td>
 						</tr>
 						<tr>
+							<td colspan="2" class="py-3"></td>
+						</tr>
+						<tr>
 							<th colspan="2">
-								<h6 class="mb-0">Terlapor</h6>
+								<h6 class="text-uppercase mb-0">Terlapor</h6>
 							</th>
 						</tr>
 						<tr>
@@ -78,11 +81,11 @@
 							<td>{{ $violation->unit_kerja->name }}</td>
 						</tr>
 						<tr>
-							<td colspan="2"></td>
+							<td colspan="2" class="py-3"></td>
 						</tr>
 						<tr>
 							<th colspan="2">
-								<h6 class="mb-0">Bentuk Pelanggaran Kode Etik</h6>
+								<h6 class="text-uppercase mb-0">Bentuk Pelanggaran Kode Etik</h6>
 							</th>
 						</tr>
 						<tr>
@@ -91,7 +94,7 @@
 						</tr>
 						<tr>
 							<th>Waktu</th>
-							<td>{{ $violation->date }}</td>
+							<td>{{ $violation->formatted_date }}</td>
 						</tr>
 						<tr>
 							<th>Tempat</th>
@@ -138,11 +141,15 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2"></td>
+							<th>Diverifikasi Pada</th>
+							<td>{{ $violation->formatted_verified_at }}</td>
+						</tr>
+						<tr>
+							<td colspan="2" class="py-3"></td>
 						</tr>
 						<tr>
 							<th colspan="2">
-								<h6 class="mb-0">
+								<h6 class="text-uppercase mb-0">
 									Ketentuan
 								</h6>
 							</th>
@@ -159,11 +166,11 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2"></td>
+							<td colspan="2" class="py-3"></td>
 						</tr>
 						<tr>
 							<th colspan="2">
-								<h6 class="mb-0">
+								<h6 class="text-uppercase mb-0">
 									Pemeriksaan
 								</h6>
 							</th>
@@ -199,11 +206,11 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2"></td>
+							<td colspan="2" class="py-3"></td>
 						</tr>
 						<tr>
 							<th colspan="2">
-								<h6 class="mb-0">Dokumen</h6>
+								<h6 class="text-uppercase mb-0">Dokumen</h6>
 							</th>
 						</tr>
 						<tr>

@@ -9,6 +9,7 @@
 				<th>NIP</th>
 				<th>Jabatan</th>
 				<th>Jenis Kode Etik</th>
+				<th>Tanggal Pelanggaran</th>
 				<th>Status Pelanggaran</th>
 			</tr>
 		</thead>
@@ -20,6 +21,7 @@
 					<td>{{ $violation->nip ?? '-' }}</td>
 					<td>{{ $violation->position ?? '-' }}</td>
 					<td>{{ $violation->type ?? '-' }}</td>
+					<td>{{ $violation->formatted_date ?? '-' }}</td>
 					<td>{{ $violation->status ?? '-' }}</td>
 				</tr>
 			@endforeach
