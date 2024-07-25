@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\UserRole;
 use App\Http\Requests\LoginAuthenticateRequest;
 use App\Http\Requests\RegisterSubmitRequest;
 use App\Models\User;
@@ -27,17 +28,43 @@ class AuthController extends Controller
         ];
 
         if (Auth::attempt($credentials)) {
-            if ($request->has('from')) {
-                return redirect(urldecode($request->from))->withSuccess('Anda berhasil login!');
+            $user = Auth::user();
+
+            if ($this->checkRole($user, $request->input('role'))) {
+                if ($request->has('from')) {
+                    return redirect(urldecode($request->from))->withSuccess('Anda berhasil login!');
+                }
+
+                return redirect()
+                    ->route('dashboard.index')
+                    ->withSuccess('Anda berhasil login!');
+            } else {
+                Session::flush();
+                Auth::logout();
             }
-            return redirect()
-                ->route('dashboard.index')
-                ->withSuccess('Anda berhasil login!');
         }
 
         return redirect()
             ->back()
             ->withErrors(['message' => 'Ups! Username atau password salah']);
+    }
+
+    private function checkRole($user, $role)
+    {
+        switch ($role) {
+            case UserRole::ADMIN:
+                return $user->admin()->exists();
+            case UserRole::USER:
+                return true; // Assuming every user is at least a 'USER'
+            case UserRole::ATASAN_UNIT_KERJA:
+                return $user->atasan()->exists();
+            case UserRole::KOMISI_KODE_ETIK:
+                return $user->komisi()->exists();
+            case UserRole::MANAGER:
+                return $user->manager()->exists();
+            default:
+                return false;
+        }
     }
 
     public function register_index()
