@@ -55,7 +55,7 @@ class AuthController extends Controller
             case UserRole::ADMIN:
                 return $user->admin()->exists();
             case UserRole::USER:
-                return true; // Assuming every user is at least a 'USER'
+                return !$user->admin()->exists() && !$user->atasan()->exists() && !$user->komisi()->exists() && !$user->manager()->exists();
             case UserRole::ATASAN_UNIT_KERJA:
                 return $user->atasan()->exists();
             case UserRole::KOMISI_KODE_ETIK:
