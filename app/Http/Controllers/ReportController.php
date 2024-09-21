@@ -51,7 +51,7 @@ class ReportController extends Controller
         if ($request->ajax()) {
             $data = Violation::query();
             if ($request->status) $data->where('status', $request->status);
-            $data->get();
+            $data = $data->orderBy('date', 'desc')->get();
 
             return DataTables::of($data)
                 ->addIndexColumn()

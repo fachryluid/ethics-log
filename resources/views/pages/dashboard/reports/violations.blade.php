@@ -67,6 +67,7 @@
 					<table class="table-striped data-table table">
 						<thead>
 							<tr>
+								<th>Tanggal Pelanggaran</th>
 								<th>Terlapor</th>
 								<th>Jenis Kode Etik</th>
 								<th>Deskripsi</th>
@@ -94,6 +95,10 @@
 					}
 				},
 				columns: [{
+						data: 'formatted_date',
+						name: 'formatted_date'
+					},
+					{
 						data: 'offender',
 						name: 'offender'
 					},
