@@ -37,9 +37,9 @@
 								@endforeach
 							</select>
 						</div> --}}
-						<div class="col-12">
+						<div class="col-12 mb-3">
 							<label class="form-label">Status</label>
-							<select class="form-select filter-select-status">
+							<select class="form-select filter filter-select-status">
 								<option value="">Semua</option>
 								<option value="{{ ViolationStatus::PENDING }}" {{ request('status') === ViolationStatus::PENDING ? 'selected' : '' }}>{{ ViolationStatus::PENDING }}</option>
 								<option value="{{ ViolationStatus::VERIFIED }}" {{ request('status') === ViolationStatus::VERIFIED ? 'selected' : '' }}>{{ ViolationStatus::VERIFIED }}</option>
@@ -47,6 +47,21 @@
 								<option value="{{ ViolationStatus::PROVEN_GUILTY }}" {{ request('status') === ViolationStatus::PROVEN_GUILTY ? 'selected' : '' }}>{{ ViolationStatus::PROVEN_GUILTY }}</option>
 								<option value="{{ ViolationStatus::NOT_PROVEN }}" {{ request('status') === ViolationStatus::NOT_PROVEN ? 'selected' : '' }}>{{ ViolationStatus::NOT_PROVEN }}</option>
 							</select>
+						</div>
+						<div class="col-6 mb-3">
+							<label class="form-label">Bulan</label>
+							<select class="form-select filter filter-select-month" name="month">
+								<option value="">Semua</option>
+								@foreach (range(1, 12) as $month)
+									<option value="{{ $month }}" {{ request('month') == $month ? 'selected' : '' }}>
+										{{ date('F', mktime(0, 0, 0, $month, 1)) }}
+									</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="col-6 mb-3">
+							<label class="form-label">Tahun</label>
+							<input class="form-control filter filter-select-year" name="year" placeholder="Semua" maxlength="4" value="{{ request('year') }}" />
 						</div>
 					</div>
 				</div>
@@ -91,7 +106,10 @@
 				ajax: {
 					url: "{{ route('dashboard.reports.violations') }}",
 					data: function(d) {
+						console.log($('.filter-select-month').val())
 						d.status = $('.filter-select-status').val() ?? "{{ request('status') }}"
+						d.month = $('.filter-select-month').val() ?? "{{ request('month') }}";
+						d.year = $('.filter-select-year').val() ?? "{{ request('year') }}";
 					}
 				},
 				columns: [{
@@ -124,7 +142,7 @@
 				]
 			});
 
-			$('.filter-select-status').change(function() {
+			$('.filter').change(function() {
 				table.ajax.reload();
 			});
 		});

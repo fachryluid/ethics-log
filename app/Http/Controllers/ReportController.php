@@ -50,7 +50,22 @@ class ReportController extends Controller
     {
         if ($request->ajax()) {
             $data = Violation::query();
-            if ($request->status) $data->where('status', $request->status);
+
+            // Filter berdasarkan status
+            if ($request->status) {
+                $data->where('status', $request->status);
+            }
+
+            // Filter berdasarkan bulan
+            if ($request->month) {
+                $data->whereMonth('date', $request->month);
+            }
+
+            // Filter berdasarkan tahun
+            if ($request->year) {
+                $data->whereYear('date', $request->year);
+            }
+            
             $data = $data->orderBy('date', 'desc')->get();
 
             return DataTables::of($data)
